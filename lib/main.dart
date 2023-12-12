@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
+        '/signupDetails': (context) => const Details(),
       },
     );
   }
@@ -266,7 +267,6 @@ class HomeScreen extends StatelessWidget {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: brands.length,
-                    // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                     itemBuilder: (BuildContext, index) {
                       return Row(
                         children: [
