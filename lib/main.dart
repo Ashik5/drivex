@@ -317,9 +317,9 @@ class HomeScreen extends StatelessWidget {
                   height: 20,
                 ),
                 const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
+                    'car1.png', 45),
                 const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
+                    'car1.png', 45),
               ],
             ),
           ),
@@ -370,8 +370,8 @@ class CarCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/img/cars/car1.png'),
+                    image: DecorationImage(
+                      image: AssetImage('assets/img/cars/$image'),
                     ),
                   ),
                   child: Padding(
