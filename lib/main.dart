@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
+import 'profile_management.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
+        '/profile' : (context) => ProfileManagement(),
       },
     );
   }
@@ -553,7 +555,9 @@ class CustomNavigationBar extends StatelessWidget {
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/user.svg',
                 height: 30,
