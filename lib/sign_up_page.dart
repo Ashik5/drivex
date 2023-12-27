@@ -118,7 +118,9 @@ class SignUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "tanjir.cse.20220104024.aust.edu"),
                       ),
                     ),
                   ],
@@ -146,7 +148,9 @@ class SignUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "8 characters & 1 number"),
                       ),
                     ),
                   ],
@@ -174,7 +178,9 @@ class SignUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "please! Type your password again"),
                       ),
                     ),
                   ],
@@ -186,7 +192,7 @@ class SignUp extends StatelessWidget {
               const SizedBox(
                 width: 300,
                 child: Text(
-                  "Creating an account means you’re okay with our Terms of Service and our Privacy Policy",
+                  "Creating an account means you’re okay with our Terms of Service and our Privacy Policy!",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -280,7 +286,8 @@ class Details extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const TextField(
-                    decoration: InputDecoration(border: InputBorder.none),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: "John"),
                   ),
                 ),
               ],
@@ -308,7 +315,8 @@ class Details extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const TextField(
-                    decoration: InputDecoration(border: InputBorder.none),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: "Ex-01712345678"),
                   ),
                 ),
               ],
@@ -330,7 +338,9 @@ class Details extends StatelessWidget {
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/congrats');
+              },
               child: const Text(
                 'Next',
                 style: TextStyle(fontSize: 16),
@@ -338,6 +348,59 @@ class Details extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Congrats extends StatelessWidget {
+  const Congrats({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(left: 35, top: 60),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Congrats!",
+              style: GoogleFonts.playfairDisplay(
+                  fontSize: 36, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Elevate Your Drive,Elevate Your Day!',
+              style: GoogleFonts.playfairDisplay(fontSize: 16),
+            ),
+            SizedBox(height: 50),
+            SvgPicture.asset('assets/img/patterns/congrats.svg'),
+            SizedBox(height: 40),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                child: const Text(
+                  'Procced',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
