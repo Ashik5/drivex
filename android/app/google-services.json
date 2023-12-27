@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441958177226",
+    "project_id": "drivex-f146a",
+    "storage_bucket": "drivex-f146a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441958177226:android:77002396875d6fb5945733",
+        "android_client_info": {
+          "package_name": "com.example.test_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX0ZaqE228BFWFvYo5vqJczAT2wNguncE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
