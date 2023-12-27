@@ -1,12 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'login_page.dart';
-import 'sign_up_page.dart';
-import 'profile_management.dart';
 
-final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
+          appId: "1:478669367974:android:f711fcb3a1b169baa46267",
+          messagingSenderId: "478669367974",
+          projectId: "latest01-2b8fa"));
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -16,8 +21,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: Homepage(),
+
       title: 'Testing flutter',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -37,95 +44,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        width: double.infinity,
-        child: Column(children: [
-          Expanded(
-              child: Image.asset(
-            'assets/img/front-img.png',
-            fit: BoxFit.fill,
-          )),
-          const SizedBox(height: 20),
-          const SizedBox(
-            width: 330,
-            child: Text.rich(
-              TextSpan(text: 'Ultimate ', children: <TextSpan>[
-                TextSpan(
-                    text: 'car rental ',
-                    style: TextStyle(color: Color.fromRGBO(50, 132, 255, 1))),
-                TextSpan(
-                  text: ' experience',
-                )
-              ]),
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                height: 0.8,
-                fontWeight: FontWeight.normal,
-                fontSize: 32,
-              ),
-            ),
-          ),
-          const SizedBox(height: 15),
-          const SizedBox(
-            width: 350,
-            child: Text(
-              'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                height: 1.2,
-                fontSize: 14,
-                color: Color.fromRGBO(0, 0, 0, 0.6),
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/signup');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(12, 37, 81, 1),
-              shape: RoundedRectangleBorder(
-                side: BorderSide.none,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text(
-              'Let’s get started',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: const Text(
-              'Log in',
-              style: TextStyle(color: Colors.blue),
-            ),
-          )
-        ]),
-      ),
-    )));
-  }
-}
+class Homepage extends StatelessWidget {
+  const Homepage({super.key});
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: SafeArea(
+        child: ElevatedButton(
+          onPressed: () {
+            FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: 'tanjir@gmail.com', password: '12345678');
+          },
+          child: const Text('press'),
+=======
       body: ListView(
         children: [
           Container(
@@ -531,43 +463,6 @@ class CustomNavigationBar extends StatelessWidget {
           top: Radius.circular(20),
           bottom: Radius.circular(0),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/nav/home.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/nav/location.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/nav/liked.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/nav/chat.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/nav/user.svg',
-                height: 30,
-              ))
-        ],
       ),
     );
   }
