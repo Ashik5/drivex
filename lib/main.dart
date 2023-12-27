@@ -322,6 +322,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
                     'image', 45),
+                const CarCard('Benz', 'carModel', 'drivingStyle', 'fuel', 6,
+                    4.5, 'image', 45),
+                const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
+                    'image', 45),
               ],
             ),
           ),
@@ -363,7 +367,6 @@ class CarCard extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            //car image
             Container(
               height: 200,
               alignment: Alignment.topCenter,
