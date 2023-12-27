@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
-        '/profile' : (context) => ProfileManagement(),
+        '/profile' : (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
-        '/profile': (context) => ProfileManagement(),
+        '/profile': (context) => const ProfileManagement(),
       },
     );
   }
@@ -331,7 +331,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavigationBar(),
+      bottomNavigationBar: const CustomNavigationBar(),
     );
   }
 }

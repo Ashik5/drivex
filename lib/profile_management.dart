@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileManagement extends StatelessWidget {
   const ProfileManagement({super.key});
@@ -11,7 +10,7 @@ class ProfileManagement extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
       home: Scaffold(
-        body: ListView(children: [
+        body: ListView(children: const [
           Profile(),
         ]),
       ),
@@ -20,6 +19,8 @@ class ProfileManagement extends StatelessWidget {
 }
 
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,11 +44,11 @@ class Profile extends StatelessWidget {
                   width: 300,
                   height: 55,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF3284FF),
+                    color: const Color(0xFF3284FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    shadows: [
+                    shadows: const [
                       BoxShadow(
                         color: Color(0x26000000),
                         blurRadius: 10,
@@ -56,7 +57,7 @@ class Profile extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +94,6 @@ class Profile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Transform(
-                        transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                         transform: Matrix4.identity()
                           ..translate(0.0, 0.0)
                           ..rotateZ(-1.57),
@@ -102,10 +102,9 @@ class Profile extends StatelessWidget {
                           clipBehavior: Clip.antiAlias,
                           decoration: ShapeDecoration(
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(2)),
-                            shadows: [
+                            shadows: const [
                               BoxShadow(
                                 color: Color(0x0C000000),
                                 blurRadius: 20,
@@ -120,7 +119,6 @@ class Profile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Transform(
-                                transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                 transform: Matrix4.identity()
                                   ..translate(0.0, 0.0)
                                   ..rotateZ(1.57),
@@ -128,11 +126,8 @@ class Profile extends StatelessWidget {
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(),
-                                  child: Stack(children: [
-
-                                      ]),
-                                  child: Stack(children: []),
+                                  decoration: const BoxDecoration(),
+                                  child: const Stack(children: []),
                                 ),
                               ),
                             ],
@@ -140,7 +135,7 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 100),
-                      Text(
+                      const Text(
                         'Profile',
                         style: TextStyle(
                           color: Colors.black,
@@ -153,7 +148,6 @@ class Profile extends StatelessWidget {
                       ),
                       const SizedBox(width: 100),
                       Transform(
-                        transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                         transform: Matrix4.identity()
                           ..translate(0.0, 0.0)
                           ..rotateZ(-1.57),
@@ -162,10 +156,9 @@ class Profile extends StatelessWidget {
                           clipBehavior: Clip.antiAlias,
                           decoration: ShapeDecoration(
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(2)),
-                            shadows: [
+                            shadows: const [
                               BoxShadow(
                                 color: Color(0x0C000000),
                                 blurRadius: 20,
@@ -180,7 +173,6 @@ class Profile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Transform(
-                                transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                 transform: Matrix4.identity()
                                   ..translate(0.0, 0.0)
                                   ..rotateZ(1.57),
@@ -188,11 +180,8 @@ class Profile extends StatelessWidget {
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(),
-                                  child: Stack(children: [
-
-                                      ]),
-                                  child: Stack(children: []),
+                                  decoration: const BoxDecoration(),
+                                  child: const Stack(children: []),
                                 ),
                               ),
                             ],
@@ -210,12 +199,12 @@ class Profile extends StatelessWidget {
                   width: 141,
                   height: 40,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF0D7ADE),
+                    color: const Color(0xFF0D7ADE),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,14 +228,14 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 141,
                 top: 218,
-                child: Container(
+                child: SizedBox(
                   width: 110,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 110,
                         height: 24,
                         child: Text(
@@ -289,7 +278,7 @@ class Profile extends StatelessWidget {
                       Container(
                         width: 106,
                         height: 106,
-                        decoration: ShapeDecoration(
+                        decoration: const ShapeDecoration(
                           color: Color(0xFF3284FF),
                           shape: OvalBorder(),
                         ),
@@ -298,9 +287,8 @@ class Profile extends StatelessWidget {
                       Container(
                         width: 100,
                         height: 100,
-                        decoration: ShapeDecoration(
+                        decoration: const ShapeDecoration(
                           image: DecorationImage(
-                            image: NetworkImage("https://via.placeholder.com/100x100"),
                             image: NetworkImage(
                                 "https://via.placeholder.com/100x100"),
                             fit: BoxFit.fill,
@@ -321,7 +309,7 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 42,
                 top: 422,
-                child: Container(
+                child: SizedBox(
                   width: 307,
                   height: 153,
                   child: Column(
@@ -329,14 +317,14 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -344,7 +332,6 @@ class Profile extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                                     transform: Matrix4.identity()
                                       ..translate(0.0, 0.0)
                                       ..rotateZ(-1.57),
@@ -353,11 +340,10 @@ class Profile extends StatelessWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(5)),
-                                        shadows: [
+                                            BorderRadius.circular(5)),
+                                        shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -368,15 +354,10 @@ class Profile extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Transform(
-                                            transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -386,11 +367,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(),
-                                              child: Stack(children: [
-
-                                                  ]),
-                                              child: Stack(children: []),
+                                              decoration: const BoxDecoration(),
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -398,7 +376,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 62,
                                     height: 20,
                                     child: Text(
@@ -418,7 +396,6 @@ class Profile extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-                              transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                               transform: Matrix4.identity()
                                 ..translate(0.0, 0.0)
                                 ..rotateZ(-1.57),
@@ -427,10 +404,9 @@ class Profile extends StatelessWidget {
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: [
+                                  shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -445,7 +421,6 @@ class Profile extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-                                 transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                       transform: Matrix4.identity()
                                         ..translate(0.0, 0.0)
                                         ..rotateZ(1.57),
@@ -453,11 +428,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(),
-                                        child: Stack(children: [
-
-                                            ]),
-                                        child: Stack(children: []),
+                                        decoration: const BoxDecoration(),
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -468,14 +440,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      Container(
+                      SizedBox(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -483,7 +455,6 @@ class Profile extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                                     transform: Matrix4.identity()
                                       ..translate(0.0, 0.0)
                                       ..rotateZ(-1.57),
@@ -492,10 +463,10 @@ class Profile extends StatelessWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                        shadows: [
+                                            BorderRadius.circular(5)),
+                                        shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -506,15 +477,10 @@ class Profile extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Transform(
-                                            transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -524,11 +490,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(),
-                                              child: Stack(children: [
-
-                                                  ]), 
-                                              child: Stack(children: []),
+                                              decoration: const BoxDecoration(),
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -536,7 +499,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 104,
                                     height: 20,
                                     child: Text(
@@ -556,7 +519,6 @@ class Profile extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-                              transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                               transform: Matrix4.identity()
                                 ..translate(0.0, 0.0)
                                 ..rotateZ(-1.57),
@@ -565,10 +527,9 @@ class Profile extends StatelessWidget {
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: [
+                                  shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -583,7 +544,6 @@ class Profile extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-                                      transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                       transform: Matrix4.identity()
                                         ..translate(0.0, 0.0)
                                         ..rotateZ(1.57),
@@ -591,11 +551,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(),
-                                        child: Stack(children: [
-
-                                            ]),
-                                        child: Stack(children: []),
+                                        decoration: const BoxDecoration(),
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -606,14 +563,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      Container(
+                      SizedBox(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -621,7 +578,6 @@ class Profile extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                                     transform: Matrix4.identity()
                                       ..translate(0.0, 0.0)
                                       ..rotateZ(-1.57),
@@ -630,11 +586,10 @@ class Profile extends StatelessWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(5)),
-                                        shadows: [
+                                            BorderRadius.circular(5)),
+                                        shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -645,15 +600,10 @@ class Profile extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Transform(
-                                            transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -663,11 +613,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(),
-                                              child: Stack(children: [
-
-                                                  ]),
-                                              child: Stack(children: []),
+                                              decoration: const BoxDecoration(),
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -675,7 +622,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 90,
                                     height: 20,
                                     child: Text(
@@ -695,7 +642,6 @@ class Profile extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-                              transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
                               transform: Matrix4.identity()
                                 ..translate(0.0, 0.0)
                                 ..rotateZ(-1.57),
@@ -704,10 +650,9 @@ class Profile extends StatelessWidget {
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: [
+                                  shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -722,7 +667,6 @@ class Profile extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-                                      transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
                                       transform: Matrix4.identity()
                                         ..translate(0.0, 0.0)
                                         ..rotateZ(1.57),
@@ -730,11 +674,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(),
-                                        child: Stack(children: [
-
-                                            ]),
-                                        child: Stack(children: []),
+                                        decoration: const BoxDecoration(),
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -745,14 +686,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      Container(
+                      SizedBox(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -760,9 +701,6 @@ class Profile extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-
-                                    transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
-
                                     transform: Matrix4.identity()
                                       ..translate(0.0, 0.0)
                                       ..rotateZ(-1.57),
@@ -771,13 +709,10 @@ class Profile extends StatelessWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(5)),
-
-                                        shadows: [
+                                            BorderRadius.circular(5)),
+                                        shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -788,35 +723,21 @@ class Profile extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Transform(
-                                            transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
-
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
                                               ..translate(0.0, 0.0)
                                               ..rotateZ(-1.57),
-
                                             child: Container(
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(),
-
-                                              child: Stack(children: [
-
-                                                  ]),
-
-                                              child: Stack(children: []),
-
+                                              decoration: const BoxDecoration(),
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -824,7 +745,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 90,
                                     height: 20,
                                     child: Text(
@@ -844,23 +765,17 @@ class Profile extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-                              transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(-1.57),
-
                               transform: Matrix4.identity()
                                 ..translate(0.0, 0.0)
-
+                                ..rotateZ(-1.57),
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-
-                                  shadows: [
+                                  shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -875,25 +790,15 @@ class Profile extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-
-                                      transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(1.57),
-
                                       transform: Matrix4.identity()
                                         ..translate(0.0, 0.0)
                                         ..rotateZ(1.57),
-
                                       child: Container(
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(),
-
-                                        child: Stack(children: [
-
-                                            ]),
-
-                                        child: Stack(children: []),
-
+                                        decoration: const BoxDecoration(),
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -924,7 +829,7 @@ class Profile extends StatelessWidget {
                           letterSpacing: 0.60,
                         ),
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text: ' 20.12.2003',
                         style: TextStyle(
                           color: Colors.black,
@@ -946,5 +851,4 @@ class Profile extends StatelessWidget {
       ],
     );
   }
-}
 }
