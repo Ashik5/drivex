@@ -3,10 +3,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
+          appId: "1:478669367974:android:f711fcb3a1b169baa46267",
+          messagingSenderId: "478669367974",
+          projectId: "latest01-2b8fa"));
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -29,9 +40,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
-        '/profile' : (context) => const ProfileManagement(),
+        '/profile' : (context) => ProfileManagement(),
         '/signupDetails': (context) => const Details(),
-        '/profile': (context) => const ProfileManagement(),
+        '/profile': (context) => ProfileManagement(),
       },
     );
   }
@@ -44,80 +55,80 @@ class SplashScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             body: Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        width: double.infinity,
-        child: Column(children: [
-          Expanded(
-              child: Image.asset(
-            'assets/img/front-img.png',
-            fit: BoxFit.fill,
-          )),
-          const SizedBox(height: 20),
-          const SizedBox(
-            width: 330,
-            child: Text.rich(
-              TextSpan(text: 'Ultimate ', children: <TextSpan>[
-                TextSpan(
-                    text: 'car rental ',
-                    style: TextStyle(color: Color.fromRGBO(50, 132, 255, 1))),
-                TextSpan(
-                  text: ' experience',
-                )
-              ]),
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                height: 0.8,
-                fontWeight: FontWeight.normal,
-                fontSize: 32,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                width: double.infinity,
+                child: Column(children: [
+                  Expanded(
+                      child: Image.asset(
+                        'assets/img/front-img.png',
+                        fit: BoxFit.fill,
+                      )),
+                  const SizedBox(height: 20),
+                  const SizedBox(
+                    width: 330,
+                    child: Text.rich(
+                      TextSpan(text: 'Ultimate ', children: <TextSpan>[
+                        TextSpan(
+                            text: 'car rental ',
+                            style: TextStyle(color: Color.fromRGBO(50, 132, 255, 1))),
+                        TextSpan(
+                          text: ' experience',
+                        )
+                      ]),
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        height: 0.8,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  const SizedBox(
+                    width: 350,
+                    child: Text(
+                      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
+                      softWrap: true,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        height: 1.2,
+                        fontSize: 14,
+                        color: Color.fromRGBO(0, 0, 0, 0.6),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(12, 37, 81, 1),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Let’s get started',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: const Text(
+                      'Log in',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  )
+                ]),
               ),
-            ),
-          ),
-          const SizedBox(height: 15),
-          const SizedBox(
-            width: 350,
-            child: Text(
-              'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                height: 1.2,
-                fontSize: 14,
-                color: Color.fromRGBO(0, 0, 0, 0.6),
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/signup');
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(12, 37, 81, 1),
-              shape: RoundedRectangleBorder(
-                side: BorderSide.none,
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text(
-              'Let’s get started',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: const Text(
-              'Log in',
-              style: TextStyle(color: Colors.blue),
-            ),
-          )
-        ]),
-      ),
-    )));
+            )));
   }
 }
 
@@ -331,7 +342,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
@@ -431,7 +442,7 @@ class CarCard extends StatelessWidget {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     child: Text(
                       brandName,
                       style: const TextStyle(
