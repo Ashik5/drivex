@@ -9,7 +9,7 @@ class ProfileManagement extends StatelessWidget {
       children: [
         Container(
           width: 390,
-          height: 853,
+          height: 852,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: Colors.white,
