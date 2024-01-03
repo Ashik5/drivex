@@ -1,15 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
@@ -41,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/profile': (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
+        '/signup/congrats': (context) => const Congrats(),
       },
     );
   }
@@ -132,7 +132,6 @@ class SplashScreen extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -341,7 +340,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
@@ -541,6 +540,43 @@ class CustomNavigationBar extends StatelessWidget {
           top: Radius.circular(20),
           bottom: Radius.circular(0),
         ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/home.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/location.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/liked.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/chat.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/nav/user.svg',
+                height: 30,
+              ))
+        ],
       ),
     );
   }
