@@ -1,15 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'car.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         fontFamily: 'Josefin Sans',
+        scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       ),
       home: const SplashScreen(),
       routes: {
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/profile': (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
+        '/signup/congrats': (context) => const Congrats(),
+        '/carDetails': (context) => const Car(),
       },
     );
   }
@@ -132,7 +135,6 @@ class SplashScreen extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -341,7 +343,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavigationBar(),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
@@ -361,162 +363,169 @@ class CarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(5, 0, 0, 0),
-            blurRadius: 10,
-            offset: Offset(0, 1),
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              height: 200,
-              alignment: Alignment.topCenter,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: AssetImage('assets/img/cars/car1.png'),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //rating
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/star.svg',
-                            height: 15,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '$rating',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset(
-                        'assets/icons/heart-icon.svg',
-                        height: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //brand name
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    child: Text(
-                      brandName,
-                      style: const TextStyle(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-                //hourly price
-                Text.rich(
-                  TextSpan(
-                      text: '\$$price',
-                      style: const TextStyle(fontSize: 20, color: Colors.blue),
-                      children: const [
-                        TextSpan(
-                            text: '/hr', style: TextStyle(color: Colors.black)),
-                      ]),
-                ),
-              ],
-            ),
-            const Divider(
-              thickness: 1.5,
-            ),
-            //info section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/gear.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      drivingStyle,
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/pump.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      fuel,
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/seat.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '$seats seats',
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/carDetails');
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(5, 0, 0, 0),
+              blurRadius: 10,
+              offset: Offset(0, 1),
             )
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                alignment: Alignment.topCenter,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/img/cars/car1.png'),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //rating
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/star.svg',
+                              height: 15,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '$rating',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/heart-icon.svg',
+                          height: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //brand name
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
+                      child: Text(
+                        brandName,
+                        style: const TextStyle(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //hourly price
+                  Text.rich(
+                    TextSpan(
+                        text: '\$$price',
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.blue),
+                        children: const [
+                          TextSpan(
+                              text: '/hr',
+                              style: TextStyle(color: Colors.black)),
+                        ]),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1.5,
+              ),
+              //info section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/gear.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        drivingStyle,
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/pump.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        fuel,
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/seat.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '$seats seats',
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -541,6 +550,43 @@ class CustomNavigationBar extends StatelessWidget {
           top: Radius.circular(20),
           bottom: Radius.circular(0),
         ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/home.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/location.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/liked.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/nav/chat.svg',
+                height: 30,
+              )),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              },
+              icon: SvgPicture.asset(
+                'assets/icons/nav/user.svg',
+                height: 30,
+              ))
+        ],
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -96,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.all(20),
                             ),
                             child:
-                            SvgPicture.asset('assets/icons/facebook.svg'),
+                                SvgPicture.asset('assets/icons/facebook.svg'),
                           ),
                         ),
                       ],
@@ -229,7 +228,8 @@ class _SignUpState extends State<SignUp> {
                     print(_emailFieldController.text);
                     print(_passFieldController.text);
                     FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: _emailFieldController.text, password: _passFieldController.text);
+                        email: _emailFieldController.text,
+                        password: _passFieldController.text);
                     Navigator.pushNamed(context, '/signupDetails');
                   },
                   child: const Text(
@@ -351,12 +351,12 @@ class Details extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/congrats');
+                Navigator.pushNamed(context, '/signup/congrats');
               },
               child: const Text(
                 'Next',
@@ -403,7 +403,7 @@ class Congrats extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   padding:
-                  const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
                   backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                   foregroundColor: Colors.white,
                 ),
