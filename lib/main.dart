@@ -6,6 +6,8 @@ import 'profile_management.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
 
+import 'booking_system.dart';
+
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
@@ -35,11 +37,19 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
+
+        
+       
+        
+        
+        '/booking': (context) => BookingSystem(),
+
         '/profile' : (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
         '/driverDocument' : (context) => const Driver(),
         '/driverDetails' : (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
+
       },
     );
   }
@@ -556,7 +566,9 @@ class CustomNavigationBar extends StatelessWidget {
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/booking');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/liked.svg',
                 height: 30,
