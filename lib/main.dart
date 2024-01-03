@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
+import 'vehicle_selection.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/signupDetails': (context) => const Details(),
         '/profile': (context) => ProfileManagement(),
         '/congrats': (context) => Congrats(),
+        '/vehicle': (context) => Selection(),
       },
     );
   }
