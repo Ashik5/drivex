@@ -8,8 +8,8 @@ class ProfileManagement extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 390,
-          height: 844,
+          width: 391,
+          height: 843,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: Colors.white,
