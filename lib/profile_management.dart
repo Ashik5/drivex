@@ -8,8 +8,8 @@ class ProfileManagement extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 391,
-          height: 843,
+          width: 390,
+          height: 853,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -24,7 +24,7 @@ class ProfileManagement extends StatelessWidget {
                 top: 648,
                 child: Container(
                   width: 300,
-                  height: 55,
+                  height: 54,
                   decoration: ShapeDecoration(
                     color:
                     const Color(0xFF3284FF),
@@ -47,7 +47,7 @@ class ProfileManagement extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 134,
-                        height: 22,
+                        height: 23,
                         child: Text(
                           'Create an Account',
                           textAlign: TextAlign.center,
