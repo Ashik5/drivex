@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
+
 class ProfileManagement extends StatelessWidget {
   const ProfileManagement({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      ),
+      home: Scaffold(
+        body: ListView(children: const [
+          Profile(),
+        ]),
+      ),
+    );
+  }
+}
 
+class Profile extends StatelessWidget {
+  const Profile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
           width: 390,
-          height: 852,
+          height: 844,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -24,8 +42,9 @@ class ProfileManagement extends StatelessWidget {
                 top: 648,
                 child: Container(
                   width: 300,
-                  height: 54,
+                  height: 55,
                   decoration: ShapeDecoration(
+                    color: const Color(0xFF3284FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -45,7 +64,7 @@ class ProfileManagement extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 134,
-                        height: 23,
+                        height: 22,
                         child: Text(
                           'Create an Account',
                           textAlign: TextAlign.center,
@@ -75,11 +94,16 @@ class ProfileManagement extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Transform(
+                        transform: Matrix4.identity()
+                          ..translate(0.0, 0.0)
+                          ..rotateZ(-1.57),
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           clipBehavior: Clip.antiAlias,
                           decoration: ShapeDecoration(
                             color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2)),
                             shadows: const [
                               BoxShadow(
                                 color: Color(0x0C000000),
@@ -95,11 +119,15 @@ class ProfileManagement extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Transform(
+                                transform: Matrix4.identity()
+                                  ..translate(0.0, 0.0)
+                                  ..rotateZ(1.57),
                                 child: Container(
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: const BoxDecoration(),
+                                  child: const Stack(children: []),
                                 ),
                               ),
                             ],
@@ -120,13 +148,16 @@ class ProfileManagement extends StatelessWidget {
                       ),
                       const SizedBox(width: 100),
                       Transform(
-
+                        transform: Matrix4.identity()
+                          ..translate(0.0, 0.0)
+                          ..rotateZ(-1.57),
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           clipBehavior: Clip.antiAlias,
                           decoration: ShapeDecoration(
                             color: Colors.white,
-
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(2)),
                             shadows: const [
                               BoxShadow(
                                 color: Color(0x0C000000),
@@ -142,12 +173,15 @@ class ProfileManagement extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Transform(
+                                transform: Matrix4.identity()
+                                  ..translate(0.0, 0.0)
+                                  ..rotateZ(1.57),
                                 child: Container(
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: const BoxDecoration(),
-
+                                  child: const Stack(children: []),
                                 ),
                               ),
                             ],
@@ -235,12 +269,41 @@ class ProfileManagement extends StatelessWidget {
               Positioned(
                 left: 143,
                 top: 95,
-
+                child: Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 106,
+                        height: 106,
+                        decoration: const ShapeDecoration(
+                          color: Color(0xFF3284FF),
+                          shape: OvalBorder(),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: const ShapeDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://via.placeholder.com/100x100"),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: OvalBorder(
+                            side: BorderSide(
+                              width: 1.50,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -269,13 +332,17 @@ class ProfileManagement extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, 0.0)
+                                      ..rotateZ(-1.57),
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                         shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
@@ -287,13 +354,21 @@ class ProfileManagement extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Transform(
+                                            transform: Matrix4.identity()
+                                              ..translate(0.0, 0.0)
+                                              ..rotateZ(1.57),
                                             child: Container(
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(),
-
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -321,13 +396,16 @@ class ProfileManagement extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-
+                              transform: Matrix4.identity()
+                                ..translate(0.0, 0.0)
+                                ..rotateZ(-1.57),
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2)),
                                   shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
@@ -343,13 +421,15 @@ class ProfileManagement extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-
+                                      transform: Matrix4.identity()
+                                        ..translate(0.0, 0.0)
+                                        ..rotateZ(1.57),
                                       child: Container(
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(),
-
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -375,13 +455,17 @@ class ProfileManagement extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, 0.0)
+                                      ..rotateZ(-1.57),
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                         shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
@@ -393,13 +477,21 @@ class ProfileManagement extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Transform(
+                                            transform: Matrix4.identity()
+                                              ..translate(0.0, 0.0)
+                                              ..rotateZ(1.57),
                                             child: Container(
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(),
-
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -427,13 +519,16 @@ class ProfileManagement extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-
+                              transform: Matrix4.identity()
+                                ..translate(0.0, 0.0)
+                                ..rotateZ(-1.57),
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2)),
                                   shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
@@ -449,13 +544,15 @@ class ProfileManagement extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-
+                                      transform: Matrix4.identity()
+                                        ..translate(0.0, 0.0)
+                                        ..rotateZ(1.57),
                                       child: Container(
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(),
-
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -481,13 +578,17 @@ class ProfileManagement extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, 0.0)
+                                      ..rotateZ(-1.57),
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                         shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
@@ -499,13 +600,21 @@ class ProfileManagement extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Transform(
+                                            transform: Matrix4.identity()
+                                              ..translate(0.0, 0.0)
+                                              ..rotateZ(1.57),
                                             child: Container(
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(),
-
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -533,13 +642,16 @@ class ProfileManagement extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-
+                              transform: Matrix4.identity()
+                                ..translate(0.0, 0.0)
+                                ..rotateZ(-1.57),
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2)),
                                   shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
@@ -555,13 +667,15 @@ class ProfileManagement extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-
+                                      transform: Matrix4.identity()
+                                        ..translate(0.0, 0.0)
+                                        ..rotateZ(1.57),
                                       child: Container(
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(),
-
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -587,13 +701,17 @@ class ProfileManagement extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Transform(
-
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, 0.0)
+                                      ..rotateZ(-1.57),
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
                                       clipBehavior: Clip.antiAlias,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
-
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                         shadows: const [
                                           BoxShadow(
                                             color: Color(0x0C000000),
@@ -605,13 +723,21 @@ class ProfileManagement extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Transform(
+                                            transform: Matrix4.identity()
+                                              ..translate(0.0, 0.0)
+                                              ..rotateZ(-1.57),
                                             child: Container(
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(),
-
+                                              child: const Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -639,13 +765,16 @@ class ProfileManagement extends StatelessWidget {
                             ),
                             const SizedBox(width: 48),
                             Transform(
-
+                              transform: Matrix4.identity()
+                                ..translate(0.0, 0.0)
+                                ..rotateZ(-1.57),
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: Colors.white,
-
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2)),
                                   shadows: const [
                                     BoxShadow(
                                       color: Color(0x19000000),
@@ -661,13 +790,15 @@ class ProfileManagement extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Transform(
-
+                                      transform: Matrix4.identity()
+                                        ..translate(0.0, 0.0)
+                                        ..rotateZ(1.57),
                                       child: Container(
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(),
-
+                                        child: const Stack(children: []),
                                       ),
                                     ),
                                   ],
