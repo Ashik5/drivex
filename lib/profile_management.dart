@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const ProfileManagement());
+}
+
 class ProfileManagement extends StatelessWidget {
   const ProfileManagement({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
-      ),
-      home: Scaffold(
-        body: ListView(children: const [
-          Profile(),
-        ]),
-      ),
+    return const MaterialApp(
+      home: HomePage(),
     );
   }
-}
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,11 +38,11 @@ class Profile extends StatelessWidget {
                   width: 300,
                   height: 55,
                   decoration: ShapeDecoration(
-                    color: const Color(0xFF3284FF),
+                    color: Color(0xFF3284FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    shadows: const [
+                    shadows: [
                       BoxShadow(
                         color: Color(0x26000000),
                         blurRadius: 10,
@@ -57,7 +51,7 @@ class Profile extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +98,7 @@ class Profile extends StatelessWidget {
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(2)),
-                            shadows: const [
+                            shadows: [
                               BoxShadow(
                                 color: Color(0x0C000000),
                                 blurRadius: 20,
@@ -126,8 +120,8 @@ class Profile extends StatelessWidget {
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(),
-                                  child: const Stack(children: []),
+                                  decoration: BoxDecoration(),
+                                  child: Stack(children: []),
                                 ),
                               ),
                             ],
@@ -135,7 +129,7 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 100),
-                      const Text(
+                      Text(
                         'Profile',
                         style: TextStyle(
                           color: Colors.black,
@@ -158,7 +152,7 @@ class Profile extends StatelessWidget {
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(2)),
-                            shadows: const [
+                            shadows: [
                               BoxShadow(
                                 color: Color(0x0C000000),
                                 blurRadius: 20,
@@ -180,8 +174,8 @@ class Profile extends StatelessWidget {
                                   width: 15,
                                   height: 15,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(),
-                                  child: const Stack(children: []),
+                                  decoration: BoxDecoration(),
+                                  child: Stack(children: []),
                                 ),
                               ),
                             ],
@@ -199,12 +193,12 @@ class Profile extends StatelessWidget {
                   width: 141,
                   height: 40,
                   decoration: ShapeDecoration(
-                    color: const Color(0xFF0D7ADE),
+                    color: Color(0xFF0D7ADE),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,14 +222,14 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 141,
                 top: 218,
-                child: SizedBox(
+                child: Container(
                   width: 110,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 110,
                         height: 24,
                         child: Text(
@@ -278,7 +272,7 @@ class Profile extends StatelessWidget {
                       Container(
                         width: 106,
                         height: 106,
-                        decoration: const ShapeDecoration(
+                        decoration: ShapeDecoration(
                           color: Color(0xFF3284FF),
                           shape: OvalBorder(),
                         ),
@@ -287,7 +281,7 @@ class Profile extends StatelessWidget {
                       Container(
                         width: 100,
                         height: 100,
-                        decoration: const ShapeDecoration(
+                        decoration: ShapeDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
                                 "https://via.placeholder.com/100x100"),
@@ -309,7 +303,7 @@ class Profile extends StatelessWidget {
               Positioned(
                 left: 42,
                 top: 422,
-                child: SizedBox(
+                child: Container(
                   width: 307,
                   height: 153,
                   child: Column(
@@ -317,14 +311,14 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      Container(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -342,8 +336,8 @@ class Profile extends StatelessWidget {
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(5)),
-                                        shadows: const [
+                                                BorderRadius.circular(5)),
+                                        shadows: [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -355,9 +349,9 @@ class Profile extends StatelessWidget {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -367,8 +361,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(),
-                                              child: const Stack(children: []),
+                                              decoration: BoxDecoration(),
+                                              child: Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -376,7 +370,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 62,
                                     height: 20,
                                     child: Text(
@@ -406,7 +400,7 @@ class Profile extends StatelessWidget {
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: const [
+                                  shadows: [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -428,8 +422,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(),
-                                        child: const Stack(children: []),
+                                        decoration: BoxDecoration(),
+                                        child: Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -440,14 +434,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      SizedBox(
+                      Container(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -465,8 +459,8 @@ class Profile extends StatelessWidget {
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(5)),
-                                        shadows: const [
+                                                BorderRadius.circular(5)),
+                                        shadows: [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -478,9 +472,9 @@ class Profile extends StatelessWidget {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -490,8 +484,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(),
-                                              child: const Stack(children: []),
+                                              decoration: BoxDecoration(),
+                                              child: Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -499,7 +493,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 104,
                                     height: 20,
                                     child: Text(
@@ -529,7 +523,7 @@ class Profile extends StatelessWidget {
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: const [
+                                  shadows: [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -551,8 +545,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(),
-                                        child: const Stack(children: []),
+                                        decoration: BoxDecoration(),
+                                        child: Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -563,14 +557,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      SizedBox(
+                      Container(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -588,8 +582,8 @@ class Profile extends StatelessWidget {
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(5)),
-                                        shadows: const [
+                                                BorderRadius.circular(5)),
+                                        shadows: [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -601,9 +595,9 @@ class Profile extends StatelessWidget {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -613,8 +607,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(),
-                                              child: const Stack(children: []),
+                                              decoration: BoxDecoration(),
+                                              child: Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -622,7 +616,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 90,
                                     height: 20,
                                     child: Text(
@@ -652,7 +646,7 @@ class Profile extends StatelessWidget {
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: const [
+                                  shadows: [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -674,8 +668,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(),
-                                        child: const Stack(children: []),
+                                        decoration: BoxDecoration(),
+                                        child: Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -686,14 +680,14 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22),
-                      SizedBox(
+                      Container(
                         width: 298,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
+                            Container(
                               height: 25,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -711,8 +705,8 @@ class Profile extends StatelessWidget {
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(5)),
-                                        shadows: const [
+                                                BorderRadius.circular(5)),
+                                        shadows: [
                                           BoxShadow(
                                             color: Color(0x0C000000),
                                             blurRadius: 20,
@@ -724,9 +718,9 @@ class Profile extends StatelessWidget {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Transform(
                                             transform: Matrix4.identity()
@@ -736,8 +730,8 @@ class Profile extends StatelessWidget {
                                               width: 15,
                                               height: 15,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(),
-                                              child: const Stack(children: []),
+                                              decoration: BoxDecoration(),
+                                              child: Stack(children: []),
                                             ),
                                           ),
                                         ],
@@ -745,7 +739,7 @@ class Profile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 90,
                                     height: 20,
                                     child: Text(
@@ -775,7 +769,7 @@ class Profile extends StatelessWidget {
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2)),
-                                  shadows: const [
+                                  shadows: [
                                     BoxShadow(
                                       color: Color(0x19000000),
                                       blurRadius: 20,
@@ -797,8 +791,8 @@ class Profile extends StatelessWidget {
                                         width: 10,
                                         height: 10,
                                         clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(),
-                                        child: const Stack(children: []),
+                                        decoration: BoxDecoration(),
+                                        child: Stack(children: []),
                                       ),
                                     ),
                                   ],
@@ -829,7 +823,7 @@ class Profile extends StatelessWidget {
                           letterSpacing: 0.60,
                         ),
                       ),
-                      const TextSpan(
+                      TextSpan(
                         text: ' 20.12.2003',
                         style: TextStyle(
                           color: Colors.black,
@@ -849,6 +843,133 @@ class Profile extends StatelessWidget {
           ),
         ),
       ],
+=======
+// ... (rest of the code remains the same)
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile Management'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          CustomButton("EDIT PROFILE", () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const EditProfilePage()),
+            );
+          }),
+          CustomButton("SETTINGS", () {
+            // Add settings functionality here
+          }),
+          CustomButton("BILLING DETAILS", () {
+            // Add billing details functionality here
+          }),
+          CustomButton("INFORMATION", () {
+            // Add information functionality here
+          }),
+          CustomButton("LOG OUT", () {
+            // Add log out functionality here
+          }),
+        ],
+      ),
+    );
+  }
+}
+
+class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key});
+
+  @override
+  _EditProfilePageState createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Edit Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+            ),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+            TextField(
+              controller: mobileController,
+              decoration: const InputDecoration(labelText: 'Mobile Number'),
+            ),
+            TextField(
+              controller: birthdayController,
+              decoration: const InputDecoration(labelText: 'Birthday'),
+            ),
+            TextField(
+              controller: addressController,
+              decoration: const InputDecoration(labelText: 'Address'),
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Add logic to save user data here
+                Navigator.pop(context); // Go back to the home page
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onPressed;
+
+  CustomButton(this.title, this.onPressed, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Text(title),
+      ),
+
     );
   }
 }

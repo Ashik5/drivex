@@ -5,18 +5,17 @@ import 'sign_up_page.dart';
 import 'profile_management.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'car.dart';
+import 'firebase_options.dart';
+import 'driver_document.dart';
+import 'booking_system.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
-          appId: "1:478669367974:android:f711fcb3a1b169baa46267",
-          messagingSenderId: "478669367974",
-          projectId: "latest01-2b8fa"));
-  await Firebase.initializeApp();
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -40,8 +39,11 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
-        '/profile': (context) => const ProfileManagement(),
+        '/booking': (context) => BookingSystem(),
+        '/profile' : (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
+        '/driverDocument' : (context) => const Driver(),
+        '/driverDetails' : (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
         '/carDetails': (context) => const Car(),
       },
@@ -567,13 +569,17 @@ class CustomNavigationBar extends StatelessWidget {
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/booking');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/liked.svg',
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/driverDocument');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/chat.svg',
                 height: 30,
