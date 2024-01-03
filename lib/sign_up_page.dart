@@ -1,11 +1,20 @@
 //check
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
+
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  TextEditingController _emailFieldController = TextEditingController();
+  TextEditingController _passFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +96,7 @@ class SignUp extends StatelessWidget {
                               padding: const EdgeInsets.all(20),
                             ),
                             child:
-                                SvgPicture.asset('assets/icons/facebook.svg'),
+                            SvgPicture.asset('assets/icons/facebook.svg'),
                           ),
                         ),
                       ],
@@ -117,8 +126,11 @@ class SignUp extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "tanjir.cse.20220104024.aust.edu"),
+                        controller: _emailFieldController,
                       ),
                     ),
                   ],
@@ -145,8 +157,11 @@ class SignUp extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "8 characters & 1 number"),
+                        controller: _passFieldController,
                       ),
                     ),
                   ],
@@ -174,7 +189,9 @@ class SignUp extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "please! Type your password again"),
                       ),
                     ),
                   ],
@@ -186,7 +203,7 @@ class SignUp extends StatelessWidget {
               const SizedBox(
                 width: 300,
                 child: Text(
-                  "Creating an account means you’re okay with our Terms of Service and our Privacy Policy",
+                  "Creating an account means you’re okay with our Terms of Service and our Privacy Policy!",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -209,6 +226,10 @@ class SignUp extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
+                    print(_emailFieldController.text);
+                    print(_passFieldController.text);
+                    FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: _emailFieldController.text, password: _passFieldController.text);
                     Navigator.pushNamed(context, '/signupDetails');
                   },
                   child: const Text(
@@ -279,8 +300,11 @@ class Details extends StatelessWidget {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const TextField(
-                    decoration: InputDecoration(border: InputBorder.none),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Ex-John',
+                        hintStyle: TextStyle(color: Colors.grey[400])),
                   ),
                 ),
               ],
@@ -308,7 +332,8 @@ class Details extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const TextField(
-                    decoration: InputDecoration(border: InputBorder.none),
+                    decoration: InputDecoration(
+                        border: InputBorder.none, hintText: "Ex-01712345678"),
                   ),
                 ),
               ],
@@ -326,11 +351,13 @@ class Details extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/congrats');
+              },
               child: const Text(
                 'Next',
                 style: TextStyle(fontSize: 16),
@@ -338,6 +365,59 @@ class Details extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Congrats extends StatelessWidget {
+  const Congrats({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(left: 35, top: 60),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Congrats!",
+              style: GoogleFonts.playfairDisplay(
+                  fontSize: 36, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Elevate Your Drive,Elevate Your Day!',
+              style: GoogleFonts.playfairDisplay(fontSize: 16),
+            ),
+            SizedBox(height: 50),
+            SvgPicture.asset('assets/img/patterns/congrats.svg'),
+            SizedBox(height: 40),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                child: const Text(
+                  'Procced',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
