@@ -285,10 +285,6 @@ class Details extends StatelessWidget {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "John"),
-                  ),
                 ),
               ],
             ),
