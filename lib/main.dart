@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/profile' : (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
-        '/driverDocument' : (context) => const Driver(),
+        '/driverDocument' : (context) => Driver(),
         '/driverDetails' : (context) => const Driver_details(),
       },
     );
