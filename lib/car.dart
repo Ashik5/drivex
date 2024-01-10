@@ -70,7 +70,7 @@ class Car extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -402,7 +402,10 @@ class Car extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
@@ -423,7 +426,7 @@ class BookingWidget extends StatelessWidget {
             topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.1),
             offset: Offset(0, 0.5),
             blurRadius: 20,
           )
