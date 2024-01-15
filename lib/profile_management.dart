@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
 
 class ProfileManagement extends StatelessWidget {
   const ProfileManagement({Key? key}) : super(key: key);
