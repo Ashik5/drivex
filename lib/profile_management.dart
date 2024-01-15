@@ -5,6 +5,13 @@ class ProfileManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      ),
+      home: Scaffold(
+        body: ListView(children: const []),
+      ),
+    );
   }
 }

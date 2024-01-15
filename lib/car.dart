@@ -70,7 +70,7 @@ class Car extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     GestureDetector(
@@ -402,7 +402,10 @@ class Car extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
@@ -423,7 +426,7 @@ class BookingWidget extends StatelessWidget {
             topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.05),
+            color: Color.fromRGBO(0, 0, 0, 0.1),
             offset: Offset(0, 0.5),
             blurRadius: 20,
           )
@@ -448,7 +451,9 @@ class BookingWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 fixedSize: const Size(150, 30)),
-            onPressed: () {},
+            onPressed: () {
+              _showBottomSheet(context);
+            },
             child: const Text(
               "Book Now",
               style: TextStyle(color: Colors.white),
@@ -458,4 +463,63 @@ class BookingWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 350,
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Book Your git',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                labelText: 'Pickup',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                labelText: 'Destination',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                child: const Text(
+                  'Procced',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
