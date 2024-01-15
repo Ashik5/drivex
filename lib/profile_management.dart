@@ -5,32 +5,22 @@ void main() {
 }
 
 class ProfileManagement extends StatelessWidget {
-  const ProfileManagement({super.key});
+  const ProfileManagement({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-// ... (rest of the code remains the same)
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.indigo,
+        fontFamily: 'Montserrat',
+      ),
       home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +32,22 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          CustomButton("EDIT PROFILE", () {
+          CustomButton("EDIT PROFILE", Icons.edit, () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const EditProfilePage()),
             );
           }),
-          CustomButton("SETTINGS", () {
+          CustomButton("SETTINGS", Icons.settings, () {
             // Add settings functionality here
           }),
-          CustomButton("BILLING DETAILS", () {
+          CustomButton("BILLING DETAILS", Icons.credit_card, () {
             // Add billing details functionality here
           }),
-          CustomButton("INFORMATION", () {
+          CustomButton("INFORMATION", Icons.info, () {
             // Add information functionality here
           }),
-          CustomButton("LOG OUT", () {
+          CustomButton("LOG OUT", Icons.logout, () {
             // Add log out functionality here
           }),
         ],
@@ -67,7 +57,7 @@ class HomePage extends StatelessWidget {
 }
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  const EditProfilePage({Key? key});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -91,35 +81,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: mobileController,
-              decoration: const InputDecoration(labelText: 'Mobile Number'),
-            ),
-            TextField(
-              controller: birthdayController,
-              decoration: const InputDecoration(labelText: 'Birthday'),
-            ),
-            TextField(
-              controller: addressController,
-              decoration: const InputDecoration(labelText: 'Address'),
-            ),
+            _buildTextField("Name", Icons.person, nameController),
+            _buildTextField("Email", Icons.email, emailController),
+            _buildTextField("Mobile Number", Icons.phone, mobileController),
+            _buildTextField("Birthday", Icons.cake, birthdayController),
+            _buildTextField("Address", Icons.location_on, addressController),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 // Add logic to save user data here
                 Navigator.pop(context); // Go back to the home page
               },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.indigo, // Set the desired color directly
+              ),
               child: const Text('Save'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String labelText, IconData icon, TextEditingController controller) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          icon: Icon(icon, color: Colors.indigo), // Set the desired color directly
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.indigo),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.indigo),
+          ),
         ),
       ),
     );
@@ -128,17 +125,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 class CustomButton extends StatelessWidget {
   final String title;
+  final IconData icon;
   final VoidCallback onPressed;
 
-  CustomButton(this.title, this.onPressed, {super.key});
+  const CustomButton(this.title, this.icon, this.onPressed, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
+      child: ElevatedButton.icon(
         onPressed: onPressed,
-        child: Text(title),
+        icon: Icon(icon),
+        label: Text(title),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.indigo, // Set the desired color directly
+        ),
       ),
     );
   }
