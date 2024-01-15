@@ -1,8 +1,8 @@
-//check
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -225,8 +225,6 @@ class _SignUpState extends State<SignUp> {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () async {
-                    print(_emailFieldController.text);
-                    print(_passFieldController.text);
                     try {
                       final credential = await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
@@ -272,9 +270,16 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   const Details({Key? key}) : super(key: key);
 
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<Details> {
+  TextEditingController _name = TextEditingController();
+  TextEditingController _phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -317,6 +322,7 @@ class Details extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: 'Ex-John',
                         hintStyle: TextStyle(color: Colors.grey[400])),
+                    controller: _name,
                   ),
                 ),
               ],
@@ -343,9 +349,10 @@ class Details extends StatelessWidget {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    decoration: const InputDecoration(
                         border: InputBorder.none, hintText: "Ex-01712345678"),
+                    controller: _phone,
                   ),
                 ),
               ],
@@ -367,7 +374,12 @@ class Details extends StatelessWidget {
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {
+              onPressed: () async {
+                await FirebaseFirestore.instance.collection('Users').add({
+                  'name': _name.text,
+                  'phone': _phone.text,
+                  'uid': FirebaseAuth.instance.currentUser?.uid,
+                });
                 Navigator.pushNamed(context, '/signup/congrats');
               },
               child: const Text(
