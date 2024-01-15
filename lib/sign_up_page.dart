@@ -125,13 +125,11 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-
                       child: TextField(
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "tanjir.cse.20220104024.aust.edu"),
                         controller: _emailFieldController,
-
                       ),
                     ),
                   ],
@@ -158,13 +156,11 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-
                       child: TextField(
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "8 characters & 1 number"),
                         controller: _passFieldController,
-
                       ),
                     ),
                   ],
@@ -228,12 +224,24 @@ class _SignUpState extends State<SignUp> {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     print(_emailFieldController.text);
                     print(_passFieldController.text);
-                    FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    try {
+                      final credential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
                         email: _emailFieldController.text,
-                        password: _passFieldController.text);
+                        password: _passFieldController.text,
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        print('The password provided is too weak.');
+                      } else if (e.code == 'email-already-in-use') {
+                        print('The account already exists for that email.');
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                     Navigator.pushNamed(context, '/signupDetails');
                   },
                   child: const Text(
@@ -304,14 +312,12 @@ class Details extends StatelessWidget {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Ex-John',
                         hintStyle: TextStyle(color: Colors.grey[400])),
                   ),
-
                 ),
               ],
             ),
@@ -362,9 +368,7 @@ class Details extends StatelessWidget {
                 foregroundColor: Colors.white,
               ),
               onPressed: () {
-
                 Navigator.pushNamed(context, '/signup/congrats');
-
               },
               child: const Text(
                 'Next',
@@ -429,7 +433,4 @@ class Congrats extends StatelessWidget {
       ),
     );
   }
-
 }
-
-
