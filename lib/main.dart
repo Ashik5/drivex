@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
         '/booking': (context) => BookingSystem(),
-        '/profile' : (context) => const ProfileManagement(),
+        '/profile': (context) => const ProfileManagement(),
         '/signupDetails': (context) => const Details(),
         '/driverDocument': (context) => const Driver(),
         '/driverDetails': (context) => const Driver_details(),
@@ -334,12 +334,16 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
-                const CarCard('Benz', 'carModel', 'drivingStyle', 'fuel', 6,
-                    4.5, 'image', 45),
-                const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
+                for (int i = 0; i < 3; i++)
+                  const Column(
+                    children: [
+                      CarCard('bmw', 'carModel', 'Manual', 'Petrol', 5, 4,
+                          'image', 45),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
