@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'auth.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'car.dart';
+import 'firebase_options.dart';
+import 'driver_document.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: "AIzaSyCX9W_kYbdvulFvYbS1xU_SO4Lt083ryk8",
-          appId: "1:478669367974:android:f711fcb3a1b169baa46267",
-          messagingSenderId: "478669367974",
-          projectId: "latest01-2b8fa"));
-  await Firebase.initializeApp();
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -32,15 +32,20 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         fontFamily: 'Josefin Sans',
+        scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       ),
-      home: const SplashScreen(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => AuthPage(),
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
-        '/profile': (context) => const ProfileManagement(),
+        '/profile': (context) => ProfileManagement(),
         '/signupDetails': (context) => const Details(),
+        '/driverDocument': (context) => const Driver(),
+        '/driverDetails': (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
+        '/carDetails': (context) => const Car(),
       },
     );
   }
@@ -329,12 +334,16 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
-                const CarCard('Benz', 'carModel', 'drivingStyle', 'fuel', 6,
-                    4.5, 'image', 45),
-                const CarCard('bmw', 'carModel', 'drivingStyle', 'fuel', 5, 4,
-                    'image', 45),
+                for (int i = 0; i < 3; i++)
+                  const Column(
+                    children: [
+                      CarCard('bmw', 'carModel', 'Manual', 'Petrol', 5, 4,
+                          'image', 45),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
@@ -360,162 +369,169 @@ class CarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(5, 0, 0, 0),
-            blurRadius: 10,
-            offset: Offset(0, 1),
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              height: 200,
-              alignment: Alignment.topCenter,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: AssetImage('assets/img/cars/car1.png'),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //rating
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/star.svg',
-                            height: 15,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '$rating',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset(
-                        'assets/icons/heart-icon.svg',
-                        height: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //brand name
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    child: Text(
-                      brandName,
-                      style: const TextStyle(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-                //hourly price
-                Text.rich(
-                  TextSpan(
-                      text: '\$$price',
-                      style: const TextStyle(fontSize: 20, color: Colors.blue),
-                      children: const [
-                        TextSpan(
-                            text: '/hr', style: TextStyle(color: Colors.black)),
-                      ]),
-                ),
-              ],
-            ),
-            const Divider(
-              thickness: 1.5,
-            ),
-            //info section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/gear.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      drivingStyle,
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/pump.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      fuel,
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/seat.svg',
-                      height: 30,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '$seats seats',
-                      style: const TextStyle(fontSize: 18),
-                    )
-                  ],
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/carDetails');
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(5, 0, 0, 0),
+              blurRadius: 10,
+              offset: Offset(0, 1),
             )
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                alignment: Alignment.topCenter,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/img/cars/car1.png'),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //rating
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/icons/star.svg',
+                              height: 15,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '$rating',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/heart-icon.svg',
+                          height: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //brand name
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
+                      child: Text(
+                        brandName,
+                        style: const TextStyle(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //hourly price
+                  Text.rich(
+                    TextSpan(
+                        text: '\$$price',
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.blue),
+                        children: const [
+                          TextSpan(
+                              text: '/hr',
+                              style: TextStyle(color: Colors.black)),
+                        ]),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1.5,
+              ),
+              //info section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/gear.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        drivingStyle,
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/pump.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        fuel,
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/seat.svg',
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '$seats seats',
+                        style: const TextStyle(fontSize: 18),
+                      )
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -557,13 +573,17 @@ class CustomNavigationBar extends StatelessWidget {
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/booking');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/liked.svg',
                 height: 30,
               )),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/driverDocument');
+              },
               icon: SvgPicture.asset(
                 'assets/icons/nav/chat.svg',
                 height: 30,
