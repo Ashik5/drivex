@@ -523,8 +523,8 @@ void _showBottomSheet(BuildContext context) {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: <Widget>[
-            const Text(
-              'Book Your git',
+            Text(
+              'Book Your trip',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -543,7 +543,289 @@ void _showBottomSheet(BuildContext context) {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 22),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  _showBottomSheet2(context);
+                },
+                child: const Text(
+                  'Procced',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+void _showBottomSheet2(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 340,
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Book Your trip',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                labelText: 'Pickup',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            Text(
+              'Select Time',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: 338,
+              height: 75,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      width: 160,
+                      height: 75,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: 160,
+                              height: 75,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFFFFFAFA),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                    color: Colors.black.withOpacity(0.2),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 58,
+                            top: 7,
+                            child: SizedBox(
+                              width: 47,
+                              height: 9,
+                              child: Text(
+                                'HOUR',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontSize: 12,
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                  letterSpacing: 0.60,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 71,
+                            top: 30,
+                            child: SizedBox(
+                              width: 18,
+                              height: 35,
+                              child: Text(
+                                '5',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontSize: 28,
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.w300,
+                                  height: 0,
+                                  letterSpacing: 1.60,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 8,
+                            top: 33,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/carDetails');
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/Minus.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 126,
+                            top: 34,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/carDetails');
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/plus.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 178,
+                    top: 0,
+                    child: Container(
+                      width: 160,
+                      height: 75,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: 160,
+                              height: 75,
+                              decoration: ShapeDecoration(
+                                color: Color(0xFFFFFAFA),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                    color: Colors.black.withOpacity(0.2),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 46,
+                            top: 6,
+                            child: SizedBox(
+                              width: 68,
+                              height: 10,
+                              child: Text(
+                                'MINUTE',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontSize: 12,
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                  letterSpacing: 0.60,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 61,
+                            top: 29,
+                            child: SizedBox(
+                              width: 39,
+                              height: 35,
+                              child: Text(
+                                '45',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.8),
+                                  fontSize: 28,
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.w300,
+                                  height: 0,
+                                  letterSpacing: 1.60,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 11,
+                            top: 33,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/carDetails');
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/Minus.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 126,
+                            top: 34,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/carDetails');
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/icons/plus.png'),
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 25),
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(

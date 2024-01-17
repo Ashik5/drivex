@@ -1,9 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Driver extends StatelessWidget {
-  const Driver({super.key});
+class Driver extends StatefulWidget {
+   Driver({super.key});
+
+  @override
+  State<Driver> createState() => _DriverState();
+}
+
+class _DriverState extends State<Driver> {
+  TextEditingController _nameFieldController = TextEditingController();
+
+  TextEditingController _ageFieldController = TextEditingController();
+
+  TextEditingController _mobileFieldController = TextEditingController();
+
+  TextEditingController _licenseFieldController = TextEditingController();
+
+  TextEditingController _nidFieldController = TextEditingController();
+
+  TextEditingController _modelFieldController = TextEditingController();
+
+  TextEditingController _regFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -294,7 +315,7 @@ class Driver extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/signupDetails');
+                    Navigator.pushNamed(context, '/driverDetails');
                   },
                   child: const Text(
                     'Upload Documents',
@@ -322,13 +343,40 @@ class Driver extends StatelessWidget {
       ),
     );
   }
+  signUp(String _mailController, String _passFieldController) async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: _mailController, password: _passFieldController);
+    final docUser=FirebaseFirestore.instance.collection('Driver').doc(userCredential.user!.email);
+    final json = {
+      'Name':_nameFieldController.text,
+      'Age':_ageFieldController.text,
+      'Car Model':_modelFieldController.text,
+      'Car Registration Number':_regFieldController.text,
+      'License Number':_licenseFieldController.text,
+      'Mobile Number':_mobileFieldController.text,
+      'NID Number':_nidFieldController.text,
+
+
+    };
+    await docUser.set(json);
+  }
 }
 
-class Driver_details extends StatelessWidget {
+class Driver_details extends StatefulWidget {
   const Driver_details({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<Driver_details> createState() => _Driver_detailsState();
+}
+
+class _Driver_detailsState extends State<Driver_details> {
+
+  TextEditingController _mailController = TextEditingController();
+
+  TextEditingController _passFieldController = TextEditingController();
+  @override
+  Widget build(BuildContext context){
     return Scaffold(
       body: Column(
         children: [
@@ -352,7 +400,7 @@ class Driver_details extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Name',
+                  'Mail',
                   style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                 ),
                 const SizedBox(
@@ -380,7 +428,7 @@ class Driver_details extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Phone',
+                  'Pass',
                   style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                 ),
                 const SizedBox(
@@ -415,9 +463,10 @@ class Driver_details extends StatelessWidget {
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+              },
               child: const Text(
-                'Next',
+                'Upload',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -425,5 +474,6 @@ class Driver_details extends StatelessWidget {
         ],
       ),
     );
+
   }
 }
