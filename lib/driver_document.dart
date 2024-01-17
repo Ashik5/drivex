@@ -1,19 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class Driver extends StatefulWidget {
+   Driver({super.key});
 
   @override
-  _SignUpState createState() => _SignUpState();
+  State<Driver> createState() => _DriverState();
 }
 
-class _SignUpState extends State<SignUp> {
-  TextEditingController _emailFieldController = TextEditingController();
-  TextEditingController _passFieldController = TextEditingController();
+class _DriverState extends State<Driver> {
+  TextEditingController _nameFieldController = TextEditingController();
+
+  TextEditingController _ageFieldController = TextEditingController();
+
+  TextEditingController _mobileFieldController = TextEditingController();
+
+  TextEditingController _licenseFieldController = TextEditingController();
+
+  TextEditingController _nidFieldController = TextEditingController();
+
+  TextEditingController _modelFieldController = TextEditingController();
+
+  TextEditingController _regFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +48,12 @@ class _SignUpState extends State<SignUp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Sign Up",
+                      "Driver Document",
                       style: GoogleFonts.playfairDisplay(
                           fontSize: 28, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Sign up with',
+                      'Upload Document for verification',
                       style: GoogleFonts.playfairDisplay(),
                     ),
                     const SizedBox(
@@ -95,7 +106,7 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.all(20),
                             ),
                             child:
-                                SvgPicture.asset('assets/icons/facebook.svg'),
+                            SvgPicture.asset('assets/icons/facebook.svg'),
                           ),
                         ),
                       ],
@@ -113,7 +124,7 @@ class _SignUpState extends State<SignUp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Email',
+                      'Name',
                       style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                     ),
                     const SizedBox(
@@ -125,11 +136,8 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: TextField(
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "tanjir.cse.20220104024.aust.edu"),
-                        controller: _emailFieldController,
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
                       ),
                     ),
                   ],
@@ -144,7 +152,7 @@ class _SignUpState extends State<SignUp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Password',
+                      'Age',
                       style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                     ),
                     const SizedBox(
@@ -156,11 +164,8 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: TextField(
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "8 characters & 1 number"),
-                        controller: _passFieldController,
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
                       ),
                     ),
                   ],
@@ -175,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Confirm password',
+                      'Mobile Number',
                       style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                     ),
                     const SizedBox(
@@ -188,9 +193,7 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "please! Type your password again"),
+                        decoration: InputDecoration(border: InputBorder.none),
                       ),
                     ),
                   ],
@@ -199,10 +202,127 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 15,
               ),
+              //actual form
+              SizedBox(
+                width: 320,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'License Number',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              //actual form
+              SizedBox(
+                width: 320,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'NID Number',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              //actual form
+              SizedBox(
+                width: 320,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Car Model',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              //actual form
+              SizedBox(
+                width: 320,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Car Registration Number',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.5, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(
+                height: 15,
+              ),
               const SizedBox(
                 width: 300,
                 child: Text(
-                  "Creating an account means you’re okay with our Terms of Service and our Privacy Policy!",
+                  "Upload Your Documents here,it might take a while for verification",
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -224,26 +344,11 @@ class _SignUpState extends State<SignUp> {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () async {
-                    try {
-                      final credential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: _emailFieldController.text,
-                        password: _passFieldController.text,
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        print('The password provided is too weak.');
-                      } else if (e.code == 'email-already-in-use') {
-                        print('The account already exists for that email.');
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
-                    Navigator.pushNamed(context, '/signupDetails');
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/driverDetails');
                   },
                   child: const Text(
-                    'Create an account',
+                    'Upload Documents',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -251,13 +356,13 @@ class _SignUpState extends State<SignUp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Already have an account?'),
+                  const Text('Already uploaded documents?'),
                   TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');
                       },
                       child: const Text(
-                        'Log in',
+                        'See here',
                         style: TextStyle(color: Colors.blue),
                       ))
                 ],
@@ -268,20 +373,40 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+  signUp(String _mailController, String _passFieldController) async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: _mailController, password: _passFieldController);
+    final docUser=FirebaseFirestore.instance.collection('Driver').doc(userCredential.user!.email);
+    final json = {
+      'Name':_nameFieldController.text,
+      'Age':_ageFieldController.text,
+      'Car Model':_modelFieldController.text,
+      'Car Registration Number':_regFieldController.text,
+      'License Number':_licenseFieldController.text,
+      'Mobile Number':_mobileFieldController.text,
+      'NID Number':_nidFieldController.text,
+
+
+    };
+    await docUser.set(json);
+  }
 }
 
-class Details extends StatefulWidget {
-  const Details({Key? key}) : super(key: key);
+class Driver_details extends StatefulWidget {
+  const Driver_details({Key? key}) : super(key: key);
 
   @override
-  _DetailsPageState createState() => _DetailsPageState();
+  State<Driver_details> createState() => _Driver_detailsState();
 }
 
-class _DetailsPageState extends State<Details> {
-  TextEditingController _name = TextEditingController();
-  TextEditingController _phone = TextEditingController();
+class _Driver_detailsState extends State<Driver_details> {
+
+  TextEditingController _mailController = TextEditingController();
+
+  TextEditingController _passFieldController = TextEditingController();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       body: Column(
         children: [
@@ -305,7 +430,7 @@ class _DetailsPageState extends State<Details> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Name',
+                  'Mail',
                   style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                 ),
                 const SizedBox(
@@ -317,12 +442,8 @@ class _DetailsPageState extends State<Details> {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Ex-John',
-                        hintStyle: TextStyle(color: Colors.grey[400])),
-                    controller: _name,
+                  child: const TextField(
+                    decoration: InputDecoration(border: InputBorder.none),
                   ),
                 ),
               ],
@@ -337,7 +458,7 @@ class _DetailsPageState extends State<Details> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Phone',
+                  'Pass',
                   style: TextStyle(fontSize: 16, color: Colors.grey[800]),
                 ),
                 const SizedBox(
@@ -349,10 +470,8 @@ class _DetailsPageState extends State<Details> {
                     border: Border.all(width: 1.5, color: Colors.grey),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: "Ex-01712345678"),
-                    controller: _phone,
+                  child: const TextField(
+                    decoration: InputDecoration(border: InputBorder.none),
                   ),
                 ),
               ],
@@ -370,20 +489,15 @@ class _DetailsPageState extends State<Details> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
-              onPressed: () async {
-                await FirebaseFirestore.instance.collection('Users').add({
-                  'name': _name.text,
-                  'phone': _phone.text,
-                  'uid': FirebaseAuth.instance.currentUser?.uid,
-                });
-                Navigator.pushNamed(context, '/signup/congrats');
+              onPressed: () {
+                
               },
               child: const Text(
-                'Next',
+                'Upload',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -391,58 +505,6 @@ class _DetailsPageState extends State<Details> {
         ],
       ),
     );
-  }
-}
 
-class Congrats extends StatelessWidget {
-  const Congrats({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(left: 35, top: 60),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Congrats!",
-              style: GoogleFonts.playfairDisplay(
-                  fontSize: 36, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Elevate Your Drive,Elevate Your Day!',
-              style: GoogleFonts.playfairDisplay(fontSize: 16),
-            ),
-            SizedBox(height: 50),
-            SvgPicture.asset('assets/img/patterns/congrats.svg'),
-            SizedBox(height: 40),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide.none,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
-                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-                child: const Text(
-                  'Procced',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
