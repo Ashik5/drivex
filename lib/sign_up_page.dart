@@ -95,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.all(20),
                             ),
                             child:
-                            SvgPicture.asset('assets/icons/facebook.svg'),
+                                SvgPicture.asset('assets/icons/facebook.svg'),
                           ),
                         ),
                       ],
@@ -351,7 +351,7 @@ class Details extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
@@ -403,7 +403,7 @@ class Congrats extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   padding:
-                  const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
                   backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                   foregroundColor: Colors.white,
                 ),
