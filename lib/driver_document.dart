@@ -494,7 +494,6 @@ class _Driver_detailsState extends State<Driver_details> {
                 foregroundColor: Colors.white,
               ),
               onPressed: () {
-                
               },
               child: const Text(
                 'Upload',
