@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'car.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
+import 'ChatPage.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/driverDetails' : (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
         '/carDetails': (context) => const Car(),
+        '/ChatPage': (context) => const ChatPage(receiverUserId: 'QuVHnGgbkMbOXuWJzvHgtVVW9jD3',receiverUserEmail: 'tanjir238@gmail.com'),
       },
     );
   }
@@ -582,7 +584,7 @@ class CustomNavigationBar extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/driverDocument');
+                Navigator.pushNamed(context, '/ChatPage');
               },
               icon: SvgPicture.asset(
                 'assets/icons/nav/chat.svg',
