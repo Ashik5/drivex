@@ -47,13 +47,14 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUp(),
         '/profile': (context) => ProfileManagement(),
         '/signupDetails': (context) => const Details(),
-        '/driverDocument' : (context) => Driver(),
-        '/driverDetails' : (context) => const Driver_details(),
+        '/driverDocument': (context) => Driver(),
+        '/driverDetails': (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
-        '/carDetails': (context) => const Car(),
-        '/ChatPage': (context) => const ChatPage(receiverUserId: 'QuVHnGgbkMbOXuWJzvHgtVVW9jD3',receiverUserEmail: 'tanjir238@gmail.com'),
+        '/ChatPage': (context) => const ChatPage(
+            receiverUserId: 'QuVHnGgbkMbOXuWJzvHgtVVW9jD3',
+            receiverUserEmail: 'tanjir238@gmail.com'),
       },
     );
   }
