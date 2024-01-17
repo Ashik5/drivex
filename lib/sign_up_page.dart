@@ -375,10 +375,12 @@ class _DetailsPageState extends State<Details> {
                 foregroundColor: Colors.white,
               ),
               onPressed: () async {
-                await FirebaseFirestore.instance.collection('Users').add({
+                await FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(FirebaseAuth.instance.currentUser?.uid)
+                    .set({
                   'name': _name.text,
                   'phone': _phone.text,
-                  'uid': FirebaseAuth.instance.currentUser?.uid,
                 });
                 Navigator.pushNamed(context, '/signup/congrats');
               },

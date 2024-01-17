@@ -26,6 +26,31 @@ class Driver extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.05),
+                              offset: Offset(0, 0.5),
+                              blurRadius: 20,
+                            ),
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                          child: SvgPicture.asset('assets/icons/nav/back.svg'),
+                        ),
+                      ),
+                    ),
                     Text(
                       "Driver Document",
                       style: GoogleFonts.playfairDisplay(
@@ -34,61 +59,6 @@ class Driver extends StatelessWidget {
                     Text(
                       'Upload Document for verification',
                       style: GoogleFonts.playfairDisplay(),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.03),
-                                blurRadius: 20,
-                                offset: Offset(0, 1)),
-                          ]),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide.none,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              elevation: 0,
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/icons/google.svg',
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(boxShadow: [
-                            BoxShadow(
-                                color: Color.fromRGBO(0, 0, 0, 0.03),
-                                blurRadius: 20,
-                                offset: Offset(0, 1)),
-                          ]),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide.none,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              elevation: 0,
-                              padding: const EdgeInsets.all(20),
-                            ),
-                            child:
-                            SvgPicture.asset('assets/icons/facebook.svg'),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -441,7 +411,7 @@ class Driver_details extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
                 foregroundColor: Colors.white,
               ),
