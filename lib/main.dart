@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'auth.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 import 'profile_management.dart';
@@ -33,15 +34,16 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Josefin Sans',
         scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       ),
-      home: const SplashScreen(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => AuthPage(),
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
-        '/profile': (context) => const ProfileManagement(),
+        '/profile': (context) => ProfileManagement(),
         '/signupDetails': (context) => const Details(),
-        '/driverDocument': (context) => const Driver(),
-        '/driverDetails': (context) => const Driver_details(),
+        '/driverDocument' : (context) => Driver(),
+        '/driverDetails' : (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
         '/carDetails': (context) => const Car(),
       },

@@ -1,9 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailFieldController = TextEditingController();
+  final TextEditingController _passwordFieldController =
+      TextEditingController();
+
+  void signInUser() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailFieldController.text,
+          password: _passwordFieldController.text);
+      Navigator.pushNamed(context, '/');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +103,10 @@ class LoginPage extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        controller: _emailFieldController,
                       ),
                     ),
                   ],
@@ -105,8 +133,10 @@ class LoginPage extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        controller: _passwordFieldController,
                       ),
                     ),
                   ],
@@ -132,9 +162,7 @@ class LoginPage extends StatelessWidget {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
+                  onPressed: signInUser,
                   child: const Text(
                     'Log in',
                     style: TextStyle(fontSize: 16),
