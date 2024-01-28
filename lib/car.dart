@@ -1,17 +1,66 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Car extends StatelessWidget {
-  const Car({Key? key, required this.carId}) : super(key: key);
+class Car extends StatefulWidget {
+  const Car({super.key, required this.carId});
   final String carId;
+
+  @override
+  _CarState createState() => _CarState();
+}
+
+class _CarState extends State<Car> {
+  bool onFav = false;
+  void fav() async {
+    final DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('favourites')
+        .doc(widget.carId)
+        .get();
+    setState(() {
+      onFav = documentSnapshot.exists;
+    });
+  }
+
+  void setFav() async {
+    if (onFav) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection('favourites')
+          .doc(widget.carId)
+          .delete();
+      setState(() {
+        onFav = false;
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection("favourites")
+          .doc(widget.carId)
+          .set({});
+      setState(() {
+        onFav = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fav();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection("Cars")
-            .doc(carId)
+            .doc(widget.carId)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data!.data() != null) {
@@ -60,6 +109,9 @@ class Car extends StatelessWidget {
                         Row(
                           children: [
                             GestureDetector(
+                              onTap: () {
+                                setFav();
+                              },
                               child: Container(
                                 height: 50,
                                 width: 50,
@@ -77,8 +129,13 @@ class Car extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 15),
-                                  child: SvgPicture.asset(
-                                      'assets/icons/nav/love.svg'),
+                                  child: onFav
+                                      ? SvgPicture.asset(
+                                          'assets/icons/heart-icon.svg',
+                                          height: 50,
+                                        )
+                                      : SvgPicture.asset(
+                                          'assets/icons/nav/love.svg'),
                                 ),
                               ),
                             ),
@@ -233,7 +290,7 @@ class Car extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Rent partener",
+                          "Car Owner",
                           style: TextStyle(fontSize: 18),
                         ),
                         SizedBox(),
@@ -274,7 +331,7 @@ class Car extends StatelessWidget {
                                       child: Text("Error${snapshot.error}"),
                                     );
                                   } else {
-                                    return Center(
+                                    return const Center(
                                         child: CircularProgressIndicator());
                                   }
                                 }),
@@ -309,6 +366,9 @@ class Car extends StatelessWidget {
                               width: 10,
                             ),
                             GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/ChatPage');
+                              },
                               child: Container(
                                 height: 50,
                                 width: 50,
@@ -427,9 +487,9 @@ class Car extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const Text(
-                                "5 seats",
-                                style: TextStyle(
+                              Text(
+                                "${carData['seats']} seats",
+                                style: const TextStyle(
                                     fontSize: 18, color: Colors.white),
                               ),
                               const SizedBox(
@@ -451,20 +511,22 @@ class Car extends StatelessWidget {
                   ],
                 ),
               ),
-              bottomNavigationBar: const BookingWidget(),
+              bottomNavigationBar: BookingWidget("${carData['rate']}"),
             );
           } else if (snapshot.hasError) {
             return Center(
               child: Text("Error${snapshot.error}"),
             );
-          } else
-            return Center(child: CircularProgressIndicator());
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
         });
   }
 }
 
 class BookingWidget extends StatelessWidget {
-  const BookingWidget({Key? key}) : super(key: key);
+  final String pricePerHour;
+  const BookingWidget(this.pricePerHour, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -484,11 +546,11 @@ class BookingWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Text.rich(
+          Text.rich(
             TextSpan(
-              text: "\$40",
-              style: TextStyle(color: Colors.blue, fontSize: 20),
-              children: [
+              text: pricePerHour,
+              style: const TextStyle(color: Colors.blue, fontSize: 20),
+              children: const [
                 TextSpan(text: "/hr", style: TextStyle(color: Colors.grey))
               ],
             ),

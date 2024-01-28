@@ -46,15 +46,16 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUp(),
         '/profile': (context) => ProfileManagement(),
-        '/signupDetails': (context) => const Details(),
+        '/signupDetails': (context) => const Details(
+              userType: '',
+            ),
         '/driverDocument': (context) => Driver(),
         '/driverDetails': (context) => const Driver_details(),
         '/signup/congrats': (context) => const Congrats(),
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
         '/ChatPage': (context) => const ChatPage(
-            receiverUserId: 'QuVHnGgbkMbOXuWJzvHgtVVW9jD3',
-            receiverUserEmail: 'tanjir238@gmail.com'),
+            receiverUserId: 'Elman', receiverUserEmail: 'elman02@gmail.com'),
       },
     );
   }
@@ -259,7 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SvgPicture.asset(
                             'assets/icons/filter-icon.svg',
                             width: 18,
-                            color: const Color.fromRGBO(50, 132, 255, 1),
                           ),
                         )
                       ],
@@ -394,7 +394,7 @@ class CarCollection extends StatelessWidget {
             children: [
               for (String carId in items)
                 Column(children: [
-                  CarCard('${carId}'),
+                  CarCard(carId),
                   const SizedBox(
                     height: 20,
                   ),
@@ -409,17 +409,54 @@ class CarCollection extends StatelessWidget {
 
 class CarCard extends StatefulWidget {
   final String carId;
-  const CarCard(this.carId, {super.key});
+  CarCard(this.carId, {super.key});
+
   @override
   _CarCardState createState() => _CarCardState();
 }
 
 class _CarCardState extends State<CarCard> {
-  late String carId = " ";
+  bool onFav = false;
+  void fav() async {
+    final DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection('favourites')
+        .doc(widget.carId)
+        .get();
+    setState(() {
+      onFav = documentSnapshot.exists;
+    });
+  }
+
+  void setFav() async {
+    if (onFav) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection('favourites')
+          .doc(widget.carId)
+          .delete();
+      setState(() {
+        onFav = false;
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .collection("favourites")
+          .doc(widget.carId)
+          .set({});
+      setState(() {
+        onFav = true;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    carId = widget.carId;
+    fav();
   }
 
   @override
@@ -427,7 +464,7 @@ class _CarCardState extends State<CarCard> {
     return StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection("Cars")
-            .doc(carId)
+            .doc(widget.carId)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data!.data() != null) {
@@ -437,7 +474,7 @@ class _CarCardState extends State<CarCard> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Car(carId: carId),
+                    builder: (context) => Car(carId: widget.carId),
                   ),
                 );
               },
@@ -498,19 +535,18 @@ class _CarCardState extends State<CarCard> {
                                 ),
                               ),
                               IconButton(
-                                onPressed: () async {
-                                  await FirebaseFirestore.instance
-                                      .collection("Users")
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser?.uid)
-                                      .collection("favourites")
-                                      .doc(carId)
-                                      .set({});
+                                onPressed: () {
+                                  setFav();
                                 },
-                                icon: SvgPicture.asset(
-                                  'assets/icons/heart-icon.svg',
-                                  height: 30,
-                                ),
+                                icon: onFav
+                                    ? SvgPicture.asset(
+                                        'assets/icons/heart-icon.svg',
+                                        height: 30,
+                                      )
+                                    : SvgPicture.asset(
+                                        'assets/icons/heart-icon-0.svg',
+                                        height: 30,
+                                      ),
                               ),
                             ],
                           ),
@@ -542,7 +578,7 @@ class _CarCardState extends State<CarCard> {
                           //hourly price
                           Text.rich(
                             TextSpan(
-                                text: '\$45',
+                                text: "\$${carData['rate']}",
                                 style: const TextStyle(
                                     fontSize: 20, color: Colors.blue),
                                 children: const [
@@ -600,7 +636,7 @@ class _CarCardState extends State<CarCard> {
                                 width: 5,
                               ),
                               Text(
-                                '5 seats',
+                                '${carData['seats']} seats',
                                 style: const TextStyle(fontSize: 18),
                               )
                             ],
