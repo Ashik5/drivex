@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_app/carUpload.dart';
 import 'package:test_app/favourites.dart';
+import 'package:test_app/inbox.dart';
 import 'auth.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
@@ -54,8 +55,7 @@ class MyApp extends StatelessWidget {
         '/signup/congrats': (context) => const Congrats(),
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
-        '/ChatPage': (context) => const ChatPage(
-            receiverUserId: 'Elman', receiverUserEmail: 'elman02@gmail.com'),
+        '/inbox': (context) => const Inbox(),
       },
     );
   }
@@ -704,7 +704,7 @@ class CustomNavigationBar extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/ChatPage');
+                Navigator.pushNamed(context, '/inbox');
               },
               icon: SvgPicture.asset(
                 'assets/icons/nav/chat.svg',
