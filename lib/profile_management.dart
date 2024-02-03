@@ -72,6 +72,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
   FirebaseFirestore.instance.collection('users');
 
   @override
+  void initState() {
+    super.initState();
+    // Fetch and display user data when the page loads
+    fetchAndDisplayUserData();
+  }
+
+  Future<void> fetchAndDisplayUserData() async {
+    // Get the current user
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Fetch user data from Firebase
+      DocumentSnapshot userSnapshot = await usersCollection.doc(user.uid).get();
+
+      // Set the retrieved data in the text controllers
+      nameController.text = userSnapshot['name'] ?? '';
+      emailController.text = userSnapshot['email'] ?? '';
+      mobileController.text = userSnapshot['mobile'] ?? '';
+      birthdayController.text = userSnapshot['birthday'] ?? '';
+      addressController.text = userSnapshot['address'] ?? '';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -183,7 +207,7 @@ class CustomLogoutButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: Colors.red, // Red color for logout button
+          backgroundColor: Colors.red, // Red color for logout button
         ),
         child: Text(
           title,
