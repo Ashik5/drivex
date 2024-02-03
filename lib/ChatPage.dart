@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'chatBubbles.dart';
 import 'chatService.dart';
 
 class ChatPage extends StatefulWidget {
   final String receiverUserId;
-  final String receiverUserEmail;
+  final String receiverName;
 
   const ChatPage({
     Key? key,
     required this.receiverUserId,
-    required this.receiverUserEmail,
+    required this.receiverName,
   }) : super(key: key);
 
   @override
@@ -23,9 +24,13 @@ class _ChatPageState extends State<ChatPage> {
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  void sendMessage() async {
+  void sendMessage(String userType) async {
     if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(widget.receiverUserId, _messageController.text);
+      await _chatService.sendMessage(
+        widget.receiverUserId,
+        _messageController.text,
+        userType,
+      );
       _messageController.clear();
     }
   }
@@ -33,25 +38,42 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 251, 255, 1),
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
-        titleTextStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        title: Text(widget.receiverName),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _buildMessageList(),
-          ),
-          _buildMessageInput(),
-        ],
-      ),
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data!.data() != null) {
+              final userData = snapshot.data!.data() as Map<String, dynamic>;
+              return Column(
+                children: [
+                  Expanded(
+                    child: _buildMessageList(userData['userType']),
+                  ),
+                  _buildMessageInput(userData['userType']),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text("Error${snapshot.error}"),
+              );
+            } else
+              // ignore: curly_braces_in_flow_control_structures
+              return const Center(child: CircularProgressIndicator());
+          }),
     );
   }
 
-  Widget _buildMessageList() {
+  Widget _buildMessageList(String userType) {
     return StreamBuilder(
-      stream: _chatService.getMessage(widget.receiverUserId, _firebaseAuth.currentUser!.uid),
+      stream: _chatService.getMessage(
+          _firebaseAuth.currentUser!.uid, widget.receiverUserId, userType),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error ${snapshot.error}');
@@ -60,7 +82,10 @@ class _ChatPageState extends State<ChatPage> {
           return const Text('Loading......');
         }
         return ListView(
-          children: snapshot.data!.docs.map((document) => _buildMessageItem(document)).toList(),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          children: snapshot.data!.docs
+              .map((document) => _buildMessageItem(document))
+              .toList(),
         );
       },
     );
@@ -68,35 +93,69 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
+    var alignment = (data['senderId'] == FirebaseAuth.instance.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
     return Container(
       alignment: alignment,
       child: Column(
-        crossAxisAlignment: (data['senderId']==_firebaseAuth.currentUser!.uid) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            (data['senderId'] == FirebaseAuth.instance.currentUser!.uid)
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
         children: [
-          Text(data['senderEmail']),
-          ChatBubble(message : data['message']),
+          StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(data['senderId'])
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!.data() != null) {
+                  final userData =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  return Text(userData['name']);
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text("Error${snapshot.error}"),
+                  );
+                } else
+                  // ignore: curly_braces_in_flow_control_structures
+                  return const Center(child: CircularProgressIndicator());
+              }),
+          ChatBubble(message: data['message']),
         ],
       ),
     );
   }
 
-  Widget _buildMessageInput() {
+  Widget _buildMessageInput(String userType) {
     return Row(
       children: [
         Expanded(
           child: TextField(
             controller: _messageController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Type a message...',
             ),
           ),
         ),
         IconButton(
-          onPressed: sendMessage,
-          icon: Icon(Icons.send, size: 40),
+          onPressed: () => {
+            sendMessage(userType),
+            FirebaseFirestore.instance
+                .collection('Users')
+                .doc(FirebaseAuth.instance.currentUser?.uid)
+                .collection("inbox")
+                .doc(widget.receiverUserId)
+                .set({}),
+            FirebaseFirestore.instance
+                .collection('Users')
+                .doc(widget.receiverUserId)
+                .collection("inbox")
+                .doc(FirebaseAuth.instance.currentUser?.uid)
+                .set({}),
+          },
+          icon: const Icon(Icons.send, size: 40),
         )
       ],
     );

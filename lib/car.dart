@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_app/ChatPage.dart';
 
 class Car extends StatefulWidget {
   const Car({super.key, required this.carId});
@@ -367,7 +368,14 @@ class _CarState extends State<Car> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/ChatPage');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatPage(
+                                        receiverUserId: carData['owner'],
+                                        receiverName: "Drivex"),
+                                  ),
+                                );
                               },
                               child: Container(
                                 height: 50,
