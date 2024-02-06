@@ -14,7 +14,7 @@ class ProfileManagement extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 2, 55, 108),
       ),
       home: const HomePage(),
     );
@@ -44,9 +44,14 @@ class HomePage extends StatelessWidget {
           }),
           CustomButton("BILLING DETAILS", () {
             // Add billing details functionality here
+
           }),
           CustomButton("INFORMATION", () {
             // Add information functionality here
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UserInfoPage()),
+            );
           }),
           CustomLogoutButton("LOG OUT", () {
             FirebaseAuth.instance.signOut();
@@ -61,7 +66,7 @@ class HomePage extends StatelessWidget {
 
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({super.key});
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -278,7 +283,7 @@ class CustomLogoutButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     );
@@ -302,3 +307,53 @@ class BackButtonWidget extends StatelessWidget {
     );
   }
 }
+
+
+class UserInfoPage extends StatelessWidget {
+  const UserInfoPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('User Information'),
+      ),
+      body: Center(
+        child: FutureBuilder<DocumentSnapshot>(
+          future: FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              Map<String, dynamic> userData =
+              snapshot.data!.data() as Map<String, dynamic>;
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundImage: NetworkImage(userData['profileImage'] ?? ''),
+                    child: userData['profileImage'] == null ? const Icon(Icons.person) : null,
+                  ),
+                  const SizedBox(height: 10),
+                  Text('Name: ${userData['name']}'),
+                  Text('Email: ${userData['email']}'),
+                  Text('Mobile: ${userData['mobile']}'),
+                  Text('Birthday: ${userData['birthday']}'),
+                  Text('Address: ${userData['address']}'),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
