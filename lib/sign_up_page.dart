@@ -1,8 +1,8 @@
-//check
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -125,13 +125,11 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-
                       child: TextField(
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "tanjir.cse.20220104024.aust.edu"),
                         controller: _emailFieldController,
-
                       ),
                     ),
                   ],
@@ -158,13 +156,11 @@ class _SignUpState extends State<SignUp> {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-
                       child: TextField(
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "8 characters & 1 number"),
                         controller: _passFieldController,
-
                       ),
                     ),
                   ],
@@ -215,32 +211,97 @@ class _SignUpState extends State<SignUp> {
               ),
 
               //submit button
-              SizedBox(
-                width: 280,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: _emailFieldController.text,
+                            password: _passFieldController.text,
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const Details(userType: 'user')),
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      child: const Text(
+                        'As User',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 20),
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    print(_emailFieldController.text);
-                    print(_passFieldController.text);
-                    FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: _emailFieldController.text,
-                        password: _passFieldController.text);
-                    Navigator.pushNamed(context, '/signupDetails');
-                  },
-                  child: const Text(
-                    'Create an account',
-                    style: TextStyle(fontSize: 16),
+                  SizedBox(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 20),
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: _emailFieldController.text,
+                            password: _passFieldController.text,
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const Details(userType: 'owner')),
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      child: const Text(
+                        'As Owner',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -264,116 +325,132 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-class Details extends StatelessWidget {
-  const Details({Key? key}) : super(key: key);
+class Details extends StatefulWidget {
+  final String userType;
+  const Details({super.key, required this.userType});
 
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<Details> {
+  TextEditingController _name = TextEditingController();
+  TextEditingController _phone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(left: 50),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    alignment: Alignment.topLeft,
-                    fit: BoxFit.scaleDown,
-                    scale: 1.5,
-                    image: AssetImage('assets/img/patterns/pattern2.png'))),
-            height: 200,
-            width: double.infinity,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: 320,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Name',
-                  style: TextStyle(fontSize: 16, color: Colors.grey[800]),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.5, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Ex-John',
-                        hintStyle: TextStyle(color: Colors.grey[400])),
-                  ),
-
-                ),
-              ],
+      body: ListView(children: [
+        Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(left: 50),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      alignment: Alignment.topLeft,
+                      fit: BoxFit.scaleDown,
+                      scale: 1.5,
+                      image: AssetImage('assets/img/patterns/pattern2.png'))),
+              height: 200,
+              width: double.infinity,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 320,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Phone',
-                  style: TextStyle(fontSize: 16, color: Colors.grey[800]),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.5, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: "Ex-01712345678"),
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const SizedBox(
-            height: 200,
-          ),
-          SizedBox(
-            width: 280,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide.none,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
-                foregroundColor: Colors.white,
-              ),
-              onPressed: () {
-
-                Navigator.pushNamed(context, '/signup/congrats');
-
-              },
-              child: const Text(
-                'Next',
-                style: TextStyle(fontSize: 16),
+            SizedBox(
+              width: 320,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Name',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.5, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Ex-John',
+                          hintStyle: TextStyle(color: Colors.grey[400])),
+                      controller: _name,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: 320,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Phone',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.5, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                          border: InputBorder.none, hintText: "Ex-01712345678"),
+                      controller: _phone,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 200,
+            ),
+            SizedBox(
+              width: 280,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide.none,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .set({
+                    'name': _name.text,
+                    'phone': _phone.text,
+                    'userType': widget.userType,
+                  });
+                  Navigator.pushNamed(context, '/signup/congrats');
+                },
+                child: const Text(
+                  'Next',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }
@@ -419,7 +496,7 @@ class Congrats extends StatelessWidget {
                   Navigator.pushNamed(context, '/home');
                 },
                 child: const Text(
-                  'Procced',
+                  'Proceed',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -429,7 +506,4 @@ class Congrats extends StatelessWidget {
       ),
     );
   }
-
 }
-
-

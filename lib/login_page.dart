@@ -1,9 +1,53 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_app/Notification_Service.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailFieldController = TextEditingController();
+  final TextEditingController _passwordFieldController =
+      TextEditingController();
+  late final LocalNotificationService service;
+
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    listenToNotification();
+    super.initState();
+  }
+
+  void signInUser() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailFieldController.text,
+          password: _passwordFieldController.text);
+      await service.showNotificationWithPayload(
+        id: 1,
+        title: 'Welcome to Drivex',
+        body: 'Lets fly with Drivex',
+        payload:
+            'Hey, Explore the latest and hottest sneaker releases from top brands. ',
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +121,10 @@ class LoginPage extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        controller: _emailFieldController,
                       ),
                     ),
                   ],
@@ -105,8 +151,10 @@ class LoginPage extends StatelessWidget {
                         border: Border.all(width: 1.5, color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                      child: TextField(
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        controller: _passwordFieldController,
                       ),
                     ),
                   ],
@@ -132,9 +180,7 @@ class LoginPage extends StatelessWidget {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
+                  onPressed: signInUser,
                   child: const Text(
                     'Log in',
                     style: TextStyle(fontSize: 16),
@@ -146,5 +192,14 @@ class LoginPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void listenToNotification() =>
+      service.onNotificationClick.stream.listen(onNoticationListener);
+
+  void onNoticationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {
+      print('payload $payload');
+    }
   }
 }
