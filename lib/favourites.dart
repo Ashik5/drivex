@@ -121,7 +121,7 @@ class FavouritesCustomNavigationBar extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/driverDocument');
+                Navigator.pushNamed(context, '/ChatPage');
               },
               icon: SvgPicture.asset(
                 'assets/icons/nav/chat.svg',
