@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_app/Notification_Service.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginPageState createState() => _LoginPageState();
 }
 
@@ -14,12 +16,29 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailFieldController = TextEditingController();
   final TextEditingController _passwordFieldController =
       TextEditingController();
+  late final LocalNotificationService service;
+
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    listenToNotification();
+    super.initState();
+  }
 
   void signInUser() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailFieldController.text,
           password: _passwordFieldController.text);
+      await service.showNotificationWithPayload(
+        id: 1,
+        title: 'Welcome',
+        body: 'Lets buy your dream sneakers.',
+        payload:
+            'Hey, Explore the latest and hottest sneaker releases from top brands. ',
+      );
+      // ignore: use_build_context_synchronously
       Navigator.pushNamed(context, '/');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -173,5 +192,14 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  void listenToNotification() =>
+      service.onNotificationClick.stream.listen(onNoticationListener);
+
+  void onNoticationListener(String? payload) {
+    if (payload != null && payload.isNotEmpty) {
+      print('payload $payload');
+    }
   }
 }
