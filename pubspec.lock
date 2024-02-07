@@ -189,7 +189,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
+<<<<<<< HEAD
+=======
 
+>>>>>>> 613791d2fd8ae1a929d79a11c2996cd0ab4680da
       sha256: "7e049e32a9d347616edb39542cf92cd53fdb4a99fb6af0a0bff327c14cd76445"
       url: "https://pub.dev"
     source: hosted
@@ -206,6 +209,9 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
+<<<<<<< HEAD
+      sha256: "57e61d6010e253b36d38191cefd6199d7849152cdcd234b61ca290cdb278a0ba"
+=======
       sha256: df9d4ce37b97ecbe4347fb21887cb61383e3e95f8cf8d6c2de5999ef58e8b312
       url: "https://pub.dev"
     source: hosted
@@ -231,6 +237,7 @@ packages:
     description:
       name: firebase_storage_web
       sha256: "766be7cc58b02f33a6f21fc00d1224daa1a7aef3627a9c546b5dfa50d649d7e2"
+>>>>>>> 613791d2fd8ae1a929d79a11c2996cd0ab4680da
       url: "https://pub.dev"
     source: hosted
     version: "2.11.4"
@@ -661,7 +668,11 @@ packages:
       sha256: "5c2f730018264d276c20e4f1503fd1308dfbbae39ec8ee63c5236311ac06954b"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
+    version: "0.6.1"
+=======
     version: "0.6.0"
+>>>>>>> 613791d2fd8ae1a929d79a11c2996cd0ab4680da
   timezone:
     dependency: transitive
     description:

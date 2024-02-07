@@ -14,8 +14,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'car.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
+<<<<<<< HEAD
+import 'owner_end.dart' ;
+=======
 import 'ChatPage.dart';
 
+>>>>>>> 613791d2fd8ae1a929d79a11c2996cd0ab4680da
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
@@ -58,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
         '/inbox': (context) => const Inbox(),
+        '/owner': (context) => const Owner(),
       },
     );
   }
@@ -690,7 +695,7 @@ class CustomNavigationBar extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/addCar');
+                Navigator.pushNamed(context, '/owner');
               },
               icon: SvgPicture.asset(
                 'assets/icons/nav/location.svg',

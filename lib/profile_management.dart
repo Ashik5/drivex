@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class ProfileManagement extends StatelessWidget {
   const ProfileManagement({super.key});
 
@@ -20,7 +19,6 @@ class ProfileManagement extends StatelessWidget {
   }
 }
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -30,7 +28,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile Management'),
       ),
-      body: ListView(
+
+        body: ListView(
         children: [
           BackButtonWidget(),
           CustomButton("EDIT PROFILE", () {
@@ -51,9 +50,7 @@ class HomePage extends StatelessWidget {
           }),
           CustomButton("BILLING DETAILS", () {
             // Add billing details functionality here
-
           }),
-
           CustomLogoutButton("LOG OUT", () {
             FirebaseAuth.instance.signOut();
             Navigator.pushNamed(context, '/');
@@ -63,9 +60,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -91,7 +85,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     // Fetch and display user data when the page loads
     fetchAndDisplayUserData();
-
   }
 
   Future<void> fetchAndDisplayUserData() async {
@@ -101,7 +94,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (user != null) {
       try {
         // Fetch user data from Firebase
-        DocumentSnapshot userSnapshot = await usersCollection.doc(user.uid).get();
+        DocumentSnapshot userSnapshot =
+        await usersCollection.doc(user.uid).get();
 
         // Set the retrieved data in the text controllers
         nameController.text = userSnapshot['name'] ?? '';
@@ -124,12 +118,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-
-
-
   Future<void> saveUserData() async {
     // Get the current user
     final User? user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(user?.uid)
+        .get();
+    final userType = await userData["userType"];
 
     if (user != null) {
       String profileImageUrl = ''; // Initialize with empty string
@@ -137,7 +133,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       // If _image is not null, upload the image and get the download URL
       if (_image != null) {
         String fileName = 'profile_${user.uid}.jpg';
-        Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/$fileName');
+        Reference storageReference =
+        FirebaseStorage.instance.ref().child('profile_images/$fileName');
         await storageReference.putFile(_image!);
         profileImageUrl = await storageReference.getDownloadURL();
       }
@@ -149,12 +146,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         'mobile': mobileController.text,
         'birthday': birthdayController.text,
         'address': addressController.text,
-        'profileImage': profileImageUrl, // Set the profile image URL
+        'profileImage': profileImageUrl,
+        'userType': userType, // Set the profile image URL
       });
     }
   }
-
-
 
   Future<void> _uploadImage() async {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -200,9 +196,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Image display
-              _image == null
-                  ? const SizedBox.shrink()
-                  : Image.file(_image!),
+              _image == null ? const SizedBox.shrink() : Image.file(_image!),
               // Upload Image button
               ElevatedButton(
                 onPressed: _getImage,
@@ -263,7 +257,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 }
 
-
 class CustomButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
@@ -317,15 +310,13 @@ class BackButtonWidget extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
-          //  Navigator.pushNamed(context, '/home');
-
+            //  Navigator.pushNamed(context, '/home');
           },
         ),
       ),
     );
   }
 }
-
 
 class UserInfoPage extends StatelessWidget {
   const UserInfoPage({Key? key}) : super(key: key);
