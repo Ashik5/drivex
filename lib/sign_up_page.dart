@@ -496,7 +496,7 @@ class Congrats extends StatelessWidget {
                   Navigator.pushNamed(context, '/home');
                 },
                 child: const Text(
-                  'Procced',
+                  'Proceed',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
