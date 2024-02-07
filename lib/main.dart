@@ -17,7 +17,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'car.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
-import 'owner_end.dart' ;
+import 'ChatPage.dart';
+import 'payment_system.dart';
 
 final List<String> brands = <String>['Bmw', 'Audi', 'Toyota', 'Mercedes'];
 
@@ -60,7 +61,8 @@ class MyApp extends StatelessWidget {
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
         '/inbox': (context) => const Inbox(),
-        '/owner': (context) => const Owner(),
+        '/payment/mobile': (context) => const MobileBanking(),
+        '/payment': (context) => const Payment(),
       },
     );
   }
@@ -394,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        bottomNavigationBar:  CustomNavigationBar(),
+        bottomNavigationBar: CustomNavigationBar(),
       ),
     );
   }
