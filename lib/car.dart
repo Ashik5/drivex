@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_app/ChatPage.dart';
+import 'dart:ui';
 
 class Car extends StatefulWidget {
   const Car({super.key, required this.carId});
@@ -14,6 +16,9 @@ class Car extends StatefulWidget {
 
 class _CarState extends State<Car> {
   bool onFav = false;
+  List images = [];
+  String current_img = "";
+  int imgCount = 0;
   void fav() async {
     final DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('Users')
@@ -50,10 +55,32 @@ class _CarState extends State<Car> {
     }
   }
 
+  void setImg() async {
+    final images = await FirebaseStorage.instance
+        .ref('images/cars/${widget.carId}')
+        .listAll();
+    for (var items in images.items) {
+      String downloadURL = await items.getDownloadURL();
+      setState(() {
+        this.images.add(downloadURL);
+      });
+    }
+    setState(() {
+      current_img = this.images[0];
+    });
+  }
+
+  void setCurrentImg(String url) {
+    setState(() {
+      current_img = url;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     fav();
+    setImg();
   }
 
   @override
@@ -170,9 +197,9 @@ class _CarState extends State<Car> {
                         )
                       ],
                     ),
-                    Image.asset(
-                      'assets/img/cars/car1.png',
-                      width: 500,
+                    Image.network(
+                      current_img,
+                      height: 400,
                     ),
                     Container(
                       width: 350,
@@ -184,15 +211,18 @@ class _CarState extends State<Car> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          for (int i = 0; i < 5; i++)
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Image.asset(
-                                'assets/img/cars/car1.png',
-                                width: 50,
-                                height: 50,
+                          for (var urls in images)
+                            GestureDetector(
+                              onTap: (() => {setCurrentImg(urls)}),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Image.network(
+                                  urls,
+                                  width: 50,
+                                  height: 50,
+                                ),
                               ),
                             ),
                           Container(
