@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_app/Notification_Service.dart';
 import 'package:test_app/carUpload.dart';
 import 'package:test_app/favourites.dart';
 import 'package:test_app/inbox.dart';
@@ -13,7 +14,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'car.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
-import 'ChatPage.dart';
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
 void main() async {
@@ -21,6 +21,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalNotificationService.requestNotificationPermission();
   runApp(const MyApp());
 }
 
