@@ -14,6 +14,7 @@ import 'car.dart';
 import 'firebase_options.dart';
 import 'driver_document.dart';
 import 'ChatPage.dart';
+import 'payment_system.dart';
 
 final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
 
@@ -56,6 +57,8 @@ class MyApp extends StatelessWidget {
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
         '/inbox': (context) => const Inbox(),
+        '/payment/mobile': (context) => const MobileBanking(),
+        '/payment': (context) => const Payment(),
       },
     );
   }

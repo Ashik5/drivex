@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -368,14 +369,7 @@ class _CarState extends State<Car> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatPage(
-                                        receiverUserId: carData['owner'],
-                                        receiverName: "Drivex"),
-                                  ),
-                                );
+                                Navigator.pushNamed(context, '/ChatPage');
                               },
                               child: Container(
                                 height: 50,
@@ -644,282 +638,334 @@ void _showBottomSheet(BuildContext context) {
 }
 
 void _showBottomSheet2(BuildContext context) {
+  int hourValue = 5;
+  int minuteValue = 45;
+
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
-      return Container(
-        height: 340,
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Book Your trip',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                labelText: 'Pickup',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            Text(
-              'Select Time',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 338,
-              height: 75,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Container(
-                      width: 160,
-                      height: 75,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 160,
-                              height: 75,
-                              decoration: ShapeDecoration(
-                                color: Color(0xFFFFFAFA),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 1,
-                                    strokeAlign: BorderSide.strokeAlignOutside,
-                                    color: Colors.black.withOpacity(0.2),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                            ),
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            height: 340,
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Select Date',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () async {
+                          final selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2025),
+                          );
+                          if (selectedDate != null) {}
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          Positioned(
-                            left: 58,
-                            top: 7,
-                            child: SizedBox(
-                              width: 47,
-                              height: 9,
-                              child: Text(
-                                'HOUR',
-                                textAlign: TextAlign.center,
+                          child: Row(
+                            children: [
+                              Image.asset('assets/icons/calendar.png',
+                                  width: 35, height: 35),
+                              SizedBox(width: 10),
+                              Text(
+                                'Selected Date',
                                 style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontSize: 12,
-                                  fontFamily: 'Josefin Sans',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: 0.60,
-                                ),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black),
                               ),
-                            ),
+                            ],
                           ),
-                          Positioned(
-                            left: 71,
-                            top: 30,
-                            child: SizedBox(
-                              width: 18,
-                              height: 35,
-                              child: Text(
-                                '5',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.8),
-                                  fontSize: 28,
-                                  fontFamily: 'Josefin Sans',
-                                  fontWeight: FontWeight.w300,
-                                  height: 0,
-                                  letterSpacing: 1.60,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 8,
-                            top: 33,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/carDetails');
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/icons/Minus.png'),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 126,
-                            top: 34,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/carDetails');
-                              },
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/icons/plus.png'),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    left: 178,
-                    top: 0,
-                    child: Container(
-                      width: 160,
-                      height: 75,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 160,
-                              height: 75,
-                              decoration: ShapeDecoration(
-                                color: Color(0xFFFFFAFA),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 1,
-                                    strokeAlign: BorderSide.strokeAlignOutside,
-                                    color: Colors.black.withOpacity(0.2),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 46,
-                            top: 6,
-                            child: SizedBox(
-                              width: 68,
-                              height: 10,
-                              child: Text(
-                                'MINUTE',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontSize: 12,
-                                  fontFamily: 'Josefin Sans',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: 0.60,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 61,
-                            top: 29,
-                            child: SizedBox(
-                              width: 39,
-                              height: 35,
-                              child: Text(
-                                '45',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.8),
-                                  fontSize: 28,
-                                  fontFamily: 'Josefin Sans',
-                                  fontWeight: FontWeight.w300,
-                                  height: 0,
-                                  letterSpacing: 1.60,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 11,
-                            top: 33,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/carDetails');
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/icons/Minus.png'),
-                                    fit: BoxFit.fill,
+                  ],
+                ),
+                Text(
+                  'Select Time',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  width: 338,
+                  height: 75,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Container(
+                          width: 160,
+                          height: 75,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 160,
+                                  height: 75,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFFFFAFA),
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Colors.black.withOpacity(0.2),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 126,
-                            top: 34,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/carDetails');
-                              },
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/icons/plus.png'),
-                                    fit: BoxFit.fill,
+                              Positioned(
+                                left: 58,
+                                top: 7,
+                                child: SizedBox(
+                                  width: 47,
+                                  height: 9,
+                                  child: Text(
+                                    'HOUR',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.7),
+                                      fontSize: 12,
+                                      fontFamily: 'Josefin Sans',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                      letterSpacing: 0.60,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              Positioned(
+                                left: 71,
+                                top: 30,
+                                child: SizedBox(
+                                  width: 18,
+                                  height: 35,
+                                  child: Text(
+                                    hourValue.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontSize: 20,
+                                      fontFamily: 'Josefin Sans',
+                                      fontWeight: FontWeight.w300,
+                                      height: 0,
+                                      letterSpacing: 1.60,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 8,
+                                top: 33,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (hourValue > 1) hourValue--;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/Minus.png'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 126,
+                                top: 34,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (hourValue < 12) hourValue++;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage('assets/icons/plus.png'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
+                      Positioned(
+                        left: 178,
+                        top: 0,
+                        child: Container(
+                          width: 160,
+                          height: 75,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: 160,
+                                  height: 75,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFFFFAFA),
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 1,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignOutside,
+                                        color: Colors.black.withOpacity(0.2),
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 46,
+                                top: 6,
+                                child: SizedBox(
+                                  width: 68,
+                                  height: 10,
+                                  child: Text(
+                                    'MINUTE',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.7),
+                                      fontSize: 12,
+                                      fontFamily: 'Josefin Sans',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                      letterSpacing: 0.60,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 61,
+                                top: 29,
+                                child: SizedBox(
+                                  width: 39,
+                                  height: 35,
+                                  child: Text(
+                                    minuteValue.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontSize: 28,
+                                      fontFamily: 'Josefin Sans',
+                                      fontWeight: FontWeight.w300,
+                                      height: 0,
+                                      letterSpacing: 1.60,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 11,
+                                top: 33,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (minuteValue > 1) minuteValue--;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/Minus.png'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 126,
+                                top: 34,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (minuteValue < 60) minuteValue++;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage('assets/icons/plus.png'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 25),
+                Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 18, horizontal: 120),
+                      backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/payment');
+                    },
+                    child: const Text(
+                      'Procced',
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide.none,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 18, horizontal: 120),
-                  backgroundColor: const Color.fromRGBO(12, 32, 87, 1),
-                  foregroundColor: Colors.white,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-                child: const Text(
-                  'Procced',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       );
     },
   );
