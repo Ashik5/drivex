@@ -33,8 +33,8 @@ class _LoginPageState extends State<LoginPage> {
           password: _passwordFieldController.text);
       await service.showNotificationWithPayload(
         id: 1,
-        title: 'Welcome',
-        body: 'Lets buy your dream sneakers.',
+        title: 'Welcome to Drivex',
+        body: 'Lets fly with Drivex',
         payload:
             'Hey, Explore the latest and hottest sneaker releases from top brands. ',
       );

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'chatBubbles.dart';
 import 'chatService.dart';
 
@@ -23,15 +26,38 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  String dataType = "text";
+  XFile? _Image;
+  String msg = "";
 
-  void sendMessage(String userType) async {
-    if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(
-        widget.receiverUserId,
-        _messageController.text,
-        userType,
-      );
-      _messageController.clear();
+  void sendMessage(String userType, String dataType) async {
+    if (dataType == "image") {
+      final TaskSnapshot taskSnapshot = await FirebaseStorage.instance
+          .ref('images/chats/${DateTime.now().millisecondsSinceEpoch}.jpg')
+          .putFile(File(_Image!.path));
+      final url = await taskSnapshot.ref.getDownloadURL();
+      setState(() {
+        msg = url;
+      });
+    } else {
+      setState(() {
+        msg = _messageController.text;
+      });
+    }
+    await _chatService.sendMessage(
+        widget.receiverUserId, msg, userType, dataType);
+    _messageController.clear();
+    print(msg);
+  }
+
+  Future<void> _getImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _Image = image;
+        dataType = "image";
+      });
     }
   }
 
@@ -122,7 +148,10 @@ class _ChatPageState extends State<ChatPage> {
                   // ignore: curly_braces_in_flow_control_structures
                   return const Center(child: CircularProgressIndicator());
               }),
-          ChatBubble(message: data['message']),
+          ChatBubble(
+            message: data['message'],
+            dataType: data['dataType'],
+          ),
         ],
       ),
     );
@@ -131,6 +160,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildMessageInput(String userType) {
     return Row(
       children: [
+        IconButton(
+            onPressed: () => {_getImage()}, icon: const Icon(Icons.image)),
         Expanded(
           child: TextField(
             controller: _messageController,
@@ -141,7 +172,7 @@ class _ChatPageState extends State<ChatPage> {
         ),
         IconButton(
           onPressed: () => {
-            sendMessage(userType),
+            sendMessage(userType, dataType),
             FirebaseFirestore.instance
                 .collection('Users')
                 .doc(FirebaseAuth.instance.currentUser?.uid)
