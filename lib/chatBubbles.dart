@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;
-  const ChatBubble({super.key, required this.message});
+  final String dataType;
+  const ChatBubble({super.key, required this.message, required this.dataType});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +13,12 @@ class ChatBubble extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: const Color.fromRGBO(245, 246, 249, 1),
       ),
-      child: Text(
-        message,
-        style: TextStyle(fontSize: 15, color: Colors.black),
-      ),
+      child: dataType == "image"
+          ? Image.network(message)
+          : Text(
+              message,
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
     );
   }
 }

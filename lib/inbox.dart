@@ -98,7 +98,12 @@ class InboxCard extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Image.asset('assets/icons/avatar.png'),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        NetworkImage(userData['profileImage'] ?? ''),
+                    backgroundColor: Colors.grey[300],
+                  ),
                   const SizedBox(
                     width: 20,
                   ),
@@ -125,7 +130,9 @@ class InboxCard extends StatelessWidget {
                             final documents = snapshot.data!.docs;
                             if (documents.isNotEmpty) {
                               final msgData = documents[0].data();
-                              return Text(msgData['message']);
+                              return msgData['dataType'] == "image"
+                                  ? const Text("Image")
+                                  : Text(msgData['message']);
                             } else {
                               return const Text("No messages available");
                             }
