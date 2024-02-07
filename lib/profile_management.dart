@@ -13,12 +13,13 @@ class ProfileManagement extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 2, 55, 108),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 4, 9),
       ),
       home: const HomePage(),
     );
   }
 }
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -65,6 +66,7 @@ class HomePage extends StatelessWidget {
 
 
 
+
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
@@ -82,7 +84,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   // Reference to the Firebase collection
   final CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('users');
+  FirebaseFirestore.instance.collection('Users');
 
   @override
   void initState() {
@@ -108,7 +110,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         birthdayController.text = userSnapshot['birthday'] ?? '';
         addressController.text = userSnapshot['address'] ?? '';
 
-        // Retrieve and set the profile image
+        // Retrieve and set the profile image in edit profile page
         /*dynamic profileImage = userSnapshot['profileImage'];
         if (profileImage is String) {
           setState(() {
@@ -124,21 +126,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 
 
-  /*Future<void> saveUserData() async {
-    // Get the current user
-    final User? user = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      // Save user data to Firebase
-      await usersCollection.doc(user.uid).set({
-        'name': nameController.text,
-        'email': emailController.text,
-        'mobile': mobileController.text,
-        'birthday': birthdayController.text,
-        'address': addressController.text,
-      });
-    }
-  }*/
   Future<void> saveUserData() async {
     // Get the current user
     final User? user = FirebaseAuth.instance.currentUser;
@@ -329,7 +317,7 @@ class BackButtonWidget extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
-           // Navigator.pushNamed(context, '/home');
+          //  Navigator.pushNamed(context, '/home');
 
           },
         ),
@@ -353,7 +341,7 @@ class UserInfoPage extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: FutureBuilder<DocumentSnapshot>(
             future: FirebaseFirestore.instance
-                .collection('users')
+                .collection('Users')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .get(),
             builder: (context, snapshot) {
