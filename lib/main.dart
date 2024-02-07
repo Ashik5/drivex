@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: const CustomNavigationBar(),
+        bottomNavigationBar:  CustomNavigationBar(),
       ),
     );
   }
@@ -687,14 +687,6 @@ class CustomNavigationBar extends StatelessWidget {
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/nav/home-selected.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/owner');
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/nav/location.svg',
                 height: 30,
               )),
           IconButton(
