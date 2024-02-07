@@ -10,26 +10,11 @@ class ProfileManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 4, 9),
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Management'),
       ),
-
-        body: ListView(
+      body: ListView(
         children: [
           BackButtonWidget(),
           CustomButton("EDIT PROFILE", () {
