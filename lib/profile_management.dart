@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileManagement extends StatefulWidget {
   const ProfileManagement({Key? key}) : super(key: key);
@@ -20,6 +21,31 @@ class _ProfileManagementState extends State<ProfileManagement> {
       ),
       home: Scaffold(
         body: ListView(children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.05),
+                    offset: Offset(0, 0.5),
+                    blurRadius: 20,
+                  ),
+                ],
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                child: SvgPicture.asset('assets/icons/nav/back.svg'),
+              ),
+            ),
+          ),
           ElevatedButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
