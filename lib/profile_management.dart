@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -39,13 +38,6 @@ class HomePage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const EditProfilePage()),
             );
           }),
-          CustomButton("SETTINGS", () {
-            // Add settings functionality here
-          }),
-          CustomButton("BILLING DETAILS", () {
-            // Add billing details functionality here
-
-          }),
           CustomButton("INFORMATION", () {
             // Add information functionality here
             Navigator.push(
@@ -53,6 +45,14 @@ class HomePage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const UserInfoPage()),
             );
           }),
+          CustomButton("SETTINGS", () {
+            // Add settings functionality here
+          }),
+          CustomButton("BILLING DETAILS", () {
+            // Add billing details functionality here
+
+          }),
+
           CustomLogoutButton("LOG OUT", () {
             FirebaseAuth.instance.signOut();
             Navigator.pushNamed(context, '/');
@@ -109,12 +109,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
         addressController.text = userSnapshot['address'] ?? '';
 
         // Retrieve and set the profile image
-        dynamic profileImage = userSnapshot['profileImage'];
+        /*dynamic profileImage = userSnapshot['profileImage'];
         if (profileImage is String) {
           setState(() {
             _image = File(profileImage);
           });
-        }
+        }*/
       } catch (e) {
         // Handle any errors that might occur during data fetching
         print('Error fetching user data: $e');
@@ -124,7 +124,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 
 
-  Future<void> saveUserData() async {
+  /*Future<void> saveUserData() async {
     // Get the current user
     final User? user = FirebaseAuth.instance.currentUser;
 
@@ -138,7 +138,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
         'address': addressController.text,
       });
     }
+  }*/
+  Future<void> saveUserData() async {
+    // Get the current user
+    final User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      String profileImageUrl = ''; // Initialize with empty string
+
+      // If _image is not null, upload the image and get the download URL
+      if (_image != null) {
+        String fileName = 'profile_${user.uid}.jpg';
+        Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/$fileName');
+        await storageReference.putFile(_image!);
+        profileImageUrl = await storageReference.getDownloadURL();
+      }
+
+      // Save user data to Firebase including the profileImage field with the URL
+      await usersCollection.doc(user.uid).set({
+        'name': nameController.text,
+        'email': emailController.text,
+        'mobile': mobileController.text,
+        'birthday': birthdayController.text,
+        'address': addressController.text,
+        'profileImage': profileImageUrl, // Set the profile image URL
+      });
+    }
   }
+
+
 
   Future<void> _uploadImage() async {
     final User? user = FirebaseAuth.instance.currentUser;
@@ -301,6 +329,8 @@ class BackButtonWidget extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
+           // Navigator.pushNamed(context, '/home');
+
           },
         ),
       ),
@@ -310,7 +340,7 @@ class BackButtonWidget extends StatelessWidget {
 
 
 class UserInfoPage extends StatelessWidget {
-  const UserInfoPage({super.key});
+  const UserInfoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -319,41 +349,64 @@ class UserInfoPage extends StatelessWidget {
         title: const Text('User Information'),
       ),
       body: Center(
-        child: FutureBuilder<DocumentSnapshot>(
-          future: FirebaseFirestore.instance
-              .collection('users')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .get(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              Map<String, dynamic> userData =
-              snapshot.data!.data() as Map<String, dynamic>;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundImage: NetworkImage(userData['profileImage'] ?? ''),
-                    child: userData['profileImage'] == null ? const Icon(Icons.person) : null,
-                  ),
-                  const SizedBox(height: 10),
-                  Text('Name: ${userData['name']}'),
-                  Text('Email: ${userData['email']}'),
-                  Text('Mobile: ${userData['mobile']}'),
-                  Text('Birthday: ${userData['birthday']}'),
-                  Text('Address: ${userData['address']}'),
-                ],
-              );
-            }
-          },
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: FutureBuilder<DocumentSnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                Map<String, dynamic> userData =
+                snapshot.data!.data() as Map<String, dynamic>;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 80,
+                      backgroundImage:
+                      NetworkImage(userData['profileImage'] ?? ''),
+                      backgroundColor: Colors.grey[300],
+                    ),
+                    const SizedBox(height: 20),
+                    ListTile(
+                      leading: const Icon(Icons.person),
+                      title: const Text('Name'),
+                      subtitle: Text(userData['name']),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.email_outlined),
+                      title: const Text('Email'),
+                      subtitle: Text(userData['email']),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.phone),
+                      title: const Text('Mobile'),
+                      subtitle: Text(userData['mobile']),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.calendar_today),
+                      title: const Text('Birthday'),
+                      subtitle: Text(userData['birthday']),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.location_on),
+                      title: const Text('Address'),
+                      subtitle: Text(userData['address']),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );
   }
 }
-
