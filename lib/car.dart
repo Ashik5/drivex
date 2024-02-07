@@ -940,7 +940,7 @@ void _showBottomSheet2(BuildContext context) {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/home');
+
                 },
                 child: const Text(
                   'Procced',
