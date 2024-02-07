@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
         '/signup/congrats': (context) => const Congrats(),
         '/addCar': (context) => const CarUpload(),
         '/favourites': (context) => const Favourites(),
-        '/carDetails': (context) => const Car(),
         '/ChatPage': (context) => const ChatPage(receiverUserId: 'Elman',receiverUserEmail: 'elman02@gmail.com'),
       },
     );
