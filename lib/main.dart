@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_app/Notification_Service.dart';
+import 'package:test_app/allCar.dart';
+import 'package:test_app/brandCar.dart';
 import 'package:test_app/carUpload.dart';
 import 'package:test_app/favourites.dart';
 import 'package:test_app/inbox.dart';
@@ -16,13 +20,14 @@ import 'driver_document.dart';
 import 'ChatPage.dart';
 import 'payment_system.dart';
 
-final List<String> brands = <String>['bmw', 'audi', 'toyota', 'mercedes'];
+final List<String> brands = <String>['Bmw', 'Audi', 'Toyota', 'Mercedes'];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await LocalNotificationService.requestNotificationPermission();
   runApp(const MyApp());
 }
 
@@ -41,7 +46,6 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Josefin Sans',
         scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       ),
-      initialRoute: '/',
       routes: {
         '/': (context) => AuthPage(),
         '/home': (context) => const HomeScreen(),
@@ -290,6 +294,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AllCar(),
+                            ),
+                          )
+                        },
                         child: const Text(
                           'See All',
                           style: TextStyle(
@@ -312,15 +324,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (BuildContext, index) {
                         return Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/brands/${brands[index]}.svg',
-                                width: 70,
+                            GestureDetector(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BrandCar(
+                                      brand: brands[index],
+                                    ),
+                                  ),
+                                )
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/icons/brands/${brands[index]}.svg',
+                                  width: 70,
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -345,6 +369,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AllCar(),
+                            ),
+                          )
+                        },
                         child: const Text(
                           'See All',
                           style: TextStyle(
@@ -364,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: const CustomNavigationBar(),
+        bottomNavigationBar: CustomNavigationBar(),
       ),
     );
   }
@@ -420,6 +452,7 @@ class CarCard extends StatefulWidget {
 
 class _CarCardState extends State<CarCard> {
   bool onFav = false;
+  String carImg = "";
   void fav() async {
     final DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('Users')
@@ -456,10 +489,20 @@ class _CarCardState extends State<CarCard> {
     }
   }
 
+  Future<void> setCarImg() async {
+    String imgLink = await FirebaseStorage.instance
+        .ref('images/cars/${widget.carId}/0.jpg')
+        .getDownloadURL();
+    setState(() {
+      carImg = imgLink;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     fav();
+    setCarImg();
   }
 
   @override
@@ -503,9 +546,8 @@ class _CarCardState extends State<CarCard> {
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/img/cars/car1.png'),
-                          ),
+                          image: DecorationImage(
+                              image: NetworkImage(carImg), fit: BoxFit.cover),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -687,14 +729,6 @@ class CustomNavigationBar extends StatelessWidget {
               onPressed: () {},
               icon: SvgPicture.asset(
                 'assets/icons/nav/home-selected.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/addCar');
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/nav/location.svg',
                 height: 30,
               )),
           IconButton(

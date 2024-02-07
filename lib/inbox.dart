@@ -73,86 +73,91 @@ class InboxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-              .doc(receiverId)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!.data() != null) {
-              final userData = snapshot.data!.data() as Map<String, dynamic>;
-              List<String> ids = userData['userType'] != "user"
-                  ? [FirebaseAuth.instance.currentUser!.uid, receiverId]
-                  : [receiverId, FirebaseAuth.instance.currentUser!.uid];
-              String chatRoomId = ids.join("");
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                          receiverUserId: receiverId,
-                          receiverName: userData['name']),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Image.asset('assets/icons/avatar.png'),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          userData['name'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
+    return StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("Users")
+            .doc(receiverId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data!.data() != null) {
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            List<String> ids = userData['userType'] != "user"
+                ? [FirebaseAuth.instance.currentUser!.uid, receiverId]
+                : [receiverId, FirebaseAuth.instance.currentUser!.uid];
+            String chatRoomId = ids.join("");
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatPage(
+                        receiverUserId: receiverId,
+                        receiverName: userData['name']),
+                  ),
+                );
+              },
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        NetworkImage(userData['profileImage'] ?? ''),
+                    backgroundColor: Colors.grey[300],
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userData['name'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16,
                         ),
-                        StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                          stream: FirebaseFirestore.instance
-                              .collection("chatRoom")
-                              .doc(chatRoomId)
-                              .collection('messages')
-                              .orderBy('timestamp', descending: true)
-                              .limit(1)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              final documents = snapshot.data!.docs;
-                              if (documents.isNotEmpty) {
-                                final msgData = documents[0].data();
-                                return Text(msgData['message']);
-                              } else {
-                                return const Text("No messages available");
-                              }
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                child: Text("Error: ${snapshot.error}"),
-                              );
+                      ),
+                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        stream: FirebaseFirestore.instance
+                            .collection("chatRoom")
+                            .doc(chatRoomId)
+                            .collection('messages')
+                            .orderBy('timestamp', descending: true)
+                            .limit(1)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final documents = snapshot.data!.docs;
+                            if (documents.isNotEmpty) {
+                              final msgData = documents[0].data();
+                              return msgData['dataType'] == "image"
+                                  ? const Text("Image")
+                                  : Text(msgData['message']);
                             } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return const Text("No messages available");
                             }
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text("Error${snapshot.error}"),
-              );
-            } else
-              // ignore: curly_braces_in_flow_control_structures
-              return const Center(child: CircularProgressIndicator());
-          }),
-    );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text("Error: ${snapshot.error}"),
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("Error${snapshot.error}"),
+            );
+          } else
+            // ignore: curly_braces_in_flow_control_structures
+            return const Center(child: CircularProgressIndicator());
+        });
   }
 }

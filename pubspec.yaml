@@ -42,6 +42,10 @@ dependencies:
   provider: ^6.1.1
   firebase_storage: ^11.6.0
   image_picker: ^1.0.7
+  flutter_local_notifications: ^16.3.2
+  rxdart: ^0.27.7
+  permission_handler: ^11.0.1
+  flutter_native_splash: ^2.3.7
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +56,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -64,6 +67,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/
     - assets/img/
     - assets/icons/
     - assets/icons/logo/
@@ -97,3 +101,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+
+flutter_native_splash:
+  android: true
+  ios: true
+  background_image: assets/splashscreen.png
