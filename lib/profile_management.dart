@@ -63,7 +63,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   // Reference to the Firebase collection
   final CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('Users');
+      FirebaseFirestore.instance.collection('Users');
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       try {
         // Fetch user data from Firebase
         DocumentSnapshot userSnapshot =
-        await usersCollection.doc(user.uid).get();
+            await usersCollection.doc(user.uid).get();
 
         // Set the retrieved data in the text controllers
         nameController.text = userSnapshot['name'] ?? '';
@@ -119,7 +119,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       if (_image != null) {
         String fileName = 'profile_${user.uid}.jpg';
         Reference storageReference =
-        FirebaseStorage.instance.ref().child('profile_images/$fileName');
+            FirebaseStorage.instance.ref().child('profile_images/$fileName');
         await storageReference.putFile(_image!);
         profileImageUrl = await storageReference.getDownloadURL();
       }
@@ -146,7 +146,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       // Upload the image to Firebase Storage
       Reference storageReference =
-      FirebaseStorage.instance.ref().child('profile_images/$fileName');
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
       await storageReference.putFile(_image!);
 
       // Get the download URL of the uploaded image
@@ -215,7 +215,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       if (selectedDate != null) {
                         birthdayController.text =
-                        "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
                       }
                     },
                   ),
@@ -327,7 +327,7 @@ class UserInfoPage extends StatelessWidget {
                 return Text('Error: ${snapshot.error}');
               } else {
                 Map<String, dynamic> userData =
-                snapshot.data!.data() as Map<String, dynamic>;
+                    snapshot.data!.data() as Map<String, dynamic>;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -335,7 +335,7 @@ class UserInfoPage extends StatelessWidget {
                     CircleAvatar(
                       radius: 80,
                       backgroundImage:
-                      NetworkImage(userData['profileImage'] ?? ''),
+                          NetworkImage(userData['profileImage'] ?? ''),
                       backgroundColor: Colors.grey[300],
                     ),
                     const SizedBox(height: 20),
