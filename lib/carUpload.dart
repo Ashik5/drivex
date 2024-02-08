@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:test_app/owner_end.dart';
 
 class CarUpload extends StatefulWidget {
   const CarUpload({Key? key}) : super(key: key);
@@ -315,7 +316,12 @@ class _CarUploadState extends State<CarUpload> {
                           .putFile(File(_carImages![i].path));
                     }
                     // ignore: use_build_context_synchronously
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Owner(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Add Car',
