@@ -28,7 +28,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  url_launcher: ^6.0.6
   flutter_svg: ^2.0.9
   flutter:
     sdk: flutter
@@ -47,6 +46,10 @@ dependencies:
   rxdart: ^0.27.7
   permission_handler: ^11.0.1
   flutter_native_splash: 2.3.7
+<<<<<<< HEAD
+=======
+  url_launcher: ^6.2.4
+>>>>>>> ashik
 
 dev_dependencies:
   flutter_test:
