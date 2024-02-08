@@ -12,10 +12,8 @@ class Owner extends StatefulWidget {
 
 class _OwnerState extends State<Owner> {
   Future<void> _launchFacebookURL() async {
-    const facebookURL = 'https://www.facebook.com/mdtanjir.rahman';
-    // ignore: deprecated_member_use
+    const facebookURL = 'https://www.facebook.com/mdtanjir.rahman/';
     if (await canLaunch(facebookURL)) {
-      // ignore: deprecated_member_use
       await launch(facebookURL);
     } else {
       throw 'Could not launch $facebookURL';
@@ -42,6 +40,31 @@ class _OwnerState extends State<Owner> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.05),
+                            offset: Offset(0, 0.5),
+                            blurRadius: 20,
+                          ),
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: SvgPicture.asset('assets/icons/nav/back.svg'),
+                      ),
+                    ),
+                  ),
                   Text(
                     "Owner's End",
                     style: GoogleFonts.playfairDisplay(
@@ -101,26 +124,15 @@ class _OwnerState extends State<Owner> {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
-<<<<<<< HEAD
-                        Navigator.pushNamed(context, '/addCar');
-                      },
-                      child: const Text(
-                        'YOUR CAR',
-=======
                         Navigator.pushNamed(context, '/inbox');
                       },
                       child: const Text(
                         'CHAT WITH USERS',
->>>>>>> ashik
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
-<<<<<<< HEAD
-                  SizedBox(height: 320),
-=======
                   SizedBox(height: 300),
->>>>>>> ashik
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
