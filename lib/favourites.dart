@@ -105,14 +105,6 @@ class FavouritesCustomNavigationBar extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/addCar');
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/nav/location.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {
                 Navigator.pushNamed(context, '/favourites');
               },
               icon: SvgPicture.asset(

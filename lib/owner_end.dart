@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Owner extends StatefulWidget {
   const Owner({super.key});
@@ -10,6 +11,14 @@ class Owner extends StatefulWidget {
 }
 
 class _OwnerState extends State<Owner> {
+  Future<void> _launchFacebookURL() async {
+    const facebookURL = 'https://www.facebook.com/mdtanjir.rahman/';
+    if (await canLaunch(facebookURL)) {
+      await launch(facebookURL);
+    } else {
+      throw 'Could not launch $facebookURL';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,13 +158,14 @@ class _OwnerState extends State<Owner> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Want to explore more?'),
+                      const Text('Care joining FB Community?'),
                       TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/home');
+                            _launchFacebookURL();
+                            //Navigator.pushNamed(context, '/home');
                           },
                           child: const Text(
-                            'See here',
+                            'Click',
                             style: TextStyle(color: Colors.blue),
                           ))
                     ],
@@ -195,18 +205,10 @@ class OwnerCustomNavigationBar extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/owner');
               },
               icon: SvgPicture.asset(
                 'assets/icons/nav/home.svg',
-                height: 30,
-              )),
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/favourites');
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/nav/liked-selected.svg',
                 height: 30,
               )),
           IconButton(
