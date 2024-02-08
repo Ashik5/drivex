@@ -203,7 +203,6 @@ class _CarState extends State<Car> {
                       height: 400,
                     ),
                     Container(
-                      width: 350,
                       height: 65,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -226,19 +225,6 @@ class _CarState extends State<Car> {
                                 ),
                               ),
                             ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(102, 163, 255, 1),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Text(
-                              '+10',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -430,112 +416,127 @@ class _CarState extends State<Car> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: const Color.fromRGBO(12, 37, 81, 1),
-                          ),
-                          width: 120,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    SizedBox(
+                      width: 350,
+                      height: 221,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SvgPicture.asset(
-                                'assets/icons/manual.svg',
-                                height: 35,
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: const Color.fromRGBO(12, 37, 81, 1),
+                                ),
+                                width: 120,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/manual.svg',
+                                      height: 35,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "Manual",
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "The car is a manually driven car",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                width: 10,
                               ),
-                              const Text(
-                                "Manual",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: const Color.fromRGBO(12, 37, 81, 1),
+                                ),
+                                width: 120,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/fuel.svg',
+                                      height: 35,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "Petrol",
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "The car is a manually driven car",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                width: 10,
                               ),
-                              const Text(
-                                "The car is a manually driven car",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: const Color.fromRGBO(12, 37, 81, 1),
+                                ),
+                                width: 120,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/seat-fill.svg',
+                                      height: 35,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      "${carData['seats']} seats",
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "The car is a manually driven car",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: const Color.fromRGBO(12, 37, 81, 1),
-                          ),
-                          width: 120,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/fuel.svg',
-                                height: 35,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text(
-                                "Petrol",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text(
-                                "The car is a manually driven car",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: const Color.fromRGBO(12, 37, 81, 1),
-                          ),
-                          width: 120,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/icons/seat-fill.svg',
-                                height: 35,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "${carData['seats']} seats",
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text(
-                                "The car is a manually driven car",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 30,
