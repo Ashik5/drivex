@@ -19,6 +19,7 @@ class _OwnerState extends State<Owner> {
       throw 'Could not launch $facebookURL';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,29 +105,6 @@ class _OwnerState extends State<Owner> {
                       },
                       child: const Text(
                         'ADD CAR',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    width: 280,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/addCar');
-                      },
-                      child: const Text(
-                        'YOUR CAR',
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
