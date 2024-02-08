@@ -5,41 +5,96 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'package:flutter/material.dart';
+
 class ProfileManagement extends StatelessWidget {
-  const ProfileManagement({super.key});
+  const ProfileManagement({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Management'),
+        backgroundColor: Colors.blue,
+        title: const Text(
+          'Profile Management',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
-          BackButtonWidget(),
-          CustomButton("EDIT PROFILE", () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const EditProfilePage()),
-            );
-          }),
-          CustomButton("INFORMATION", () {
-            // Add information functionality here
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const UserInfoPage()),
-            );
-          }),
-          CustomButton("SETTINGS", () {
-            // Add settings functionality here
-          }),
-          CustomButton("BILLING DETAILS", () {
-            // Add billing details functionality here
-          }),
+          customButtonWithIcon(
+            "EDIT PROFILE",
+            Icons.edit,
+            Colors.orange,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const EditProfilePage()),
+              );
+            },
+          ),
+          customButtonWithIcon(
+            "INFORMATION",
+            Icons.info,
+            Colors.green,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UserInfoPage()),
+              );
+            },
+          ),
+          customButtonWithIcon(
+            "SETTINGS",
+            Icons.settings,
+            Colors.purple,
+            () {},
+          ),
+          customButtonWithIcon(
+            "BILLING DETAILS",
+            Icons.account_balance_wallet,
+            Colors.blue,
+            () {},
+          ),
+          SizedBox(
+            height: 420,
+          ),
           CustomLogoutButton("LOG OUT", () {
             FirebaseAuth.instance.signOut();
             Navigator.pushNamed(context, '/');
           }),
+        ],
+      ),
+    );
+  }
+
+  Widget customButtonWithIcon(
+      String text, IconData icon, Color iconColor, VoidCallback onPressed) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: iconColor,
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: ElevatedButton(
+              onPressed: onPressed,
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -68,12 +123,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Fetch and display user data when the page loads
+
     fetchAndDisplayUserData();
   }
 
   Future<void> fetchAndDisplayUserData() async {
-    // Get the current user
     final User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -172,69 +226,127 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const Text(
+          'Edit Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: Container(
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Image display
               _image == null ? const SizedBox.shrink() : Image.file(_image!),
-              // Upload Image button
               ElevatedButton(
                 onPressed: _getImage,
-                child: const Text('Upload Photo'),
-              ),
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
-              ),
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
-              TextField(
-                controller: mobileController,
-                decoration: const InputDecoration(labelText: 'Mobile Number'),
-              ),
-              TextField(
-                controller: birthdayController,
-                decoration: InputDecoration(
-                  labelText: 'Birthday',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.calendar_today),
-                    onPressed: () async {
-                      DateTime? selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                      );
-
-                      if (selectedDate != null) {
-                        birthdayController.text =
-                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                      }
-                    },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Upload Photo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              TextField(
-                controller: addressController,
-                decoration: const InputDecoration(labelText: 'Address'),
-              ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 20),
+              _buildTextField('Name', nameController),
+              _buildTextField('Email', emailController),
+              _buildTextField('Mobile Number', mobileController),
+              _buildDateTextField('Birthday', birthdayController, context),
+              _buildTextField('Address', addressController),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   await _uploadImage();
                   await saveUserData();
                   Navigator.pop(context);
                 },
-                child: const Text('Save'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String labelText, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateTextField(String labelText, TextEditingController controller,
+      BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.calendar_today),
+            onPressed: () async {
+              DateTime? selectedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1900),
+                lastDate: DateTime.now(),
+              );
+
+              if (selectedDate != null) {
+                controller.text =
+                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+              }
+            },
           ),
         ),
       ),
@@ -311,7 +423,10 @@ class UserInfoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Information'),
+        backgroundColor: Colors.blue,
+        centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -328,46 +443,83 @@ class UserInfoPage extends StatelessWidget {
               } else {
                 Map<String, dynamic> userData =
                     snapshot.data!.data() as Map<String, dynamic>;
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 80,
-                      backgroundImage:
-                          NetworkImage(userData['profileImage'] ?? ''),
-                      backgroundColor: Colors.grey[300],
-                    ),
-                    const SizedBox(height: 20),
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Name'),
-                      subtitle: Text(userData['name']),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.email_outlined),
-                      title: const Text('Email'),
-                      subtitle: Text(userData['email']),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: const Text('Mobile'),
-                      subtitle: Text(userData['mobile']),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.calendar_today),
-                      title: const Text('Birthday'),
-                      subtitle: Text(userData['birthday']),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.location_on),
-                      title: const Text('Address'),
-                      subtitle: Text(userData['address']),
-                    ),
-                  ],
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.blue,
+                            width: 4,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 80,
+                          backgroundImage:
+                              NetworkImage(userData['profileImage'] ?? ''),
+                          //backgroundColor: Colors.grey[300],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      _buildUserInfoTile(
+                        Icons.person,
+                        'Name',
+                        userData['name'],
+                      ),
+                      _buildUserInfoTile(
+                        Icons.email_outlined,
+                        'Email',
+                        userData['email'],
+                      ),
+                      _buildUserInfoTile(
+                        Icons.phone,
+                        'Mobile',
+                        userData['mobile'],
+                      ),
+                      _buildUserInfoTile(
+                        Icons.calendar_today,
+                        'Birthday',
+                        userData['birthday'],
+                      ),
+                      _buildUserInfoTile(
+                        Icons.location_on,
+                        'Address',
+                        userData['address'],
+                      ),
+                    ],
+                  ),
                 );
               }
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserInfoTile(IconData icon, String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: Colors.blue,
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 24,
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Text(
+          value,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
