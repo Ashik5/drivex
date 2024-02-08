@@ -12,8 +12,10 @@ class Owner extends StatefulWidget {
 
 class _OwnerState extends State<Owner> {
   Future<void> _launchFacebookURL() async {
-    const facebookURL = 'https://www.facebook.com/mdtanjir.rahman/';
+    const facebookURL = 'https://www.facebook.com/mdtanjir.rahman';
+    // ignore: deprecated_member_use
     if (await canLaunch(facebookURL)) {
+      // ignore: deprecated_member_use
       await launch(facebookURL);
     } else {
       throw 'Could not launch $facebookURL';
@@ -39,31 +41,6 @@ class _OwnerState extends State<Owner> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.05),
-                            offset: Offset(0, 0.5),
-                            blurRadius: 20,
-                          ),
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        child: SvgPicture.asset('assets/icons/nav/back.svg'),
-                      ),
-                    ),
-                  ),
                   Text(
                     "Owner's End",
                     style: GoogleFonts.playfairDisplay(
@@ -131,30 +108,7 @@ class _OwnerState extends State<Owner> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    width: 280,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/inbox');
-                      },
-                      child: const Text(
-                        'CHAT WITH USERS',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 300),
+                  SizedBox(height: 320),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
